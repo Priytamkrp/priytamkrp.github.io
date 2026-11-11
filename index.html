@@ -8,32 +8,28 @@
     <link rel="icon" type="image/jpeg" href="photo.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Modern Clean Color Palette (Default: Light Mode) */
+        /* Default is Light Mode */
         :root {
-            --bg-color: #f8fafc;
+            --bg-color: #f1f5f9;
             --card-bg: #ffffff;
-            --inner-bg: #f1f5f9;
+            --inner-bg: #f8fafc;
             --text-color: #0f172a;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
+            --text-muted: #475569;
+            --border-color: #cbd5e1;
             --accent-color: #0284c7;
-            --accent-gradient: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
-            --nav-bg: rgba(248, 250, 252, 0.85);
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            --nav-bg: rgba(255, 255, 255, 0.95);
         }
 
-        /* Premium Dark/Night Mode */
+        /* Dark/Night Mode Class */
         .dark-mode {
-            --bg-color: #030712;
-            --card-bg: #0f172a;
-            --inner-bg: #1e293b;
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --inner-bg: #0b0f19;
             --text-color: #f8fafc;
             --text-muted: #94a3b8;
-            --border-color: #1e293b;
+            --border-color: #1f2937;
             --accent-color: #38bdf8;
-            --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
-            --nav-bg: rgba(3, 7, 18, 0.85);
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+            --nav-bg: rgba(15, 23, 42, 0.95);
         }
 
         * {
@@ -42,53 +38,44 @@
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
             scroll-behavior: smooth;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            line-height: 1.8;
+            line-height: 1.7;
         }
-
-        /* Glassmorphism Navbar */
+        /* Navbar */
         nav {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             background: var(--nav-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.2rem 6%;
+            padding: 1rem 5%;
             border-bottom: 1px solid var(--border-color);
             z-index: 1000;
         }
-
         .nav-logo {
             font-weight: 700;
-            font-size: 1.2rem;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.1rem;
+            color: var(--accent-color);
             text-decoration: none;
         }
-
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 1.5rem;
         }
-
         .nav-links {
             display: flex;
-            gap: 1.8rem;
+            gap: 1.5rem;
             list-style: none;
         }
-
         .nav-links a {
             color: var(--text-muted);
             text-decoration: none;
@@ -96,288 +83,240 @@
             font-weight: 500;
             transition: color 0.3s;
         }
-
         .nav-links a:hover {
             color: var(--accent-color);
         }
-
         .theme-toggle {
-            background: var(--inner-bg);
+            background: var(--card-bg);
             border: 1px solid var(--border-color);
             color: var(--accent-color);
-            padding: 0.5rem 0.9rem;
-            border-radius: 8px;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.9rem;
-            box-shadow: var(--shadow);
+            font-size: 0.85rem;
         }
-
         .theme-toggle:hover {
-            transform: scale(1.05);
+            background: var(--accent-color);
+            color: var(--bg-color);
         }
-
-        /* Hero Header Section */
+        /* Header Hero Section */
         header {
-            min-height: 95vh;
+            min-height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 9rem 2rem 5rem 2rem;
-            background: radial-gradient(circle at center, var(--card-bg) 0%, var(--bg-color) 80%);
+            padding: 8rem 2rem 4rem 2rem;
+            background: radial-gradient(circle at center, var(--card-bg) 0%, var(--bg-color) 70%);
             border-bottom: 1px solid var(--border-color);
         }
-
         .profile-img-container {
-            width: 170px;
-            height: 170px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.5rem;
             border: 4px solid var(--accent-color);
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: var(--card-bg);
-            box-shadow: 0 0 30px rgba(2, 132, 199, 0.25);
+            box-shadow: 0 0 25px rgba(2, 132, 199, 0.2);
         }
-
         .profile-img-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
         .avatar-initials {
-            font-size: 3.2rem;
+            font-size: 3rem;
             font-weight: 700;
             color: var(--accent-color);
         }
-
         h1 {
-            font-size: 3rem;
+            font-size: 2.8rem;
             margin-bottom: 0.5rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
+            color: var(--text-color);
         }
-
         .tagline {
-            font-size: 1.25rem;
-            font-weight: 600;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1.2rem;
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-weight: 500;
         }
-
         .hero-desc {
-            max-width: 650px;
+            max-width: 600px;
             color: var(--text-muted);
-            margin-bottom: 2rem;
-            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
         }
-
-        /* Container & Sections */
+        /* Main Container */
         .container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 4rem 1.5rem;
+            padding: 3rem 1.5rem;
         }
-
         section {
             background: var(--card-bg);
-            padding: 3rem;
-            border-radius: 20px;
-            margin-bottom: 2.5rem;
+            padding: 2.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
             border: 1px solid var(--border-color);
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
-
         h2 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--accent-color);
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.5rem;
             border-bottom: 2px solid var(--border-color);
-            padding-bottom: 0.6rem;
-            font-weight: 700;
+            padding-bottom: 0.5rem;
         }
-
         p, li {
             color: var(--text-muted);
             font-size: 1.05rem;
             margin-bottom: 1rem;
         }
-
         /* Skills Grid */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-            gap: 1.2rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
             margin-top: 1rem;
         }
-
         .skill-box {
             background: var(--inner-bg);
-            padding: 1.2rem;
-            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            border-radius: 10px;
             border: 1px solid var(--border-color);
-            font-weight: 600;
-            color: var(--text-color);
+            font-weight: 500;
+            color: var(--accent-color);
             text-align: center;
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
         }
-
-        .skill-box:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-4px);
-        }
-
         /* Projects & Certificates Grid */
         .projects-grid, .cert-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.8rem;
-            margin-top: 1.2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
         }
-
         .project-card, .cert-card {
             background: var(--inner-bg);
-            padding: 1.8rem;
-            border-radius: 16px;
+            padding: 1.5rem;
+            border-radius: 12px;
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: var(--shadow);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
         }
-
         .project-card:hover, .cert-card:hover {
             border-color: var(--accent-color);
-            transform: translateY(-6px);
-            box-shadow: 0 20px 30px -10px rgba(2, 132, 199, 0.15);
+            transform: translateY(-5px);
         }
-
         .project-card h3, .cert-card h3 {
-            color: var(--text-color);
-            font-size: 1.25rem;
+            color: var(--accent-color);
+            font-size: 1.2rem;
             margin-bottom: 0.8rem;
-            font-weight: 600;
         }
-
         .project-links {
             display: flex;
-            gap: 0.8rem;
-            margin-top: 1.5rem;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
             flex-wrap: wrap;
         }
-
         .btn-sm {
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.9rem;
             font-size: 0.85rem;
-            border-radius: 8px;
+            border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
             display: inline-block;
             transition: 0.3s;
         }
-
         .btn-primary {
             background: var(--accent-color);
             color: #ffffff;
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
         }
-
         .btn-primary:hover {
             opacity: 0.9;
-            transform: translateY(-2px);
         }
-
         .btn-outline {
             background: transparent;
             color: var(--accent-color);
             border: 1px solid var(--accent-color);
         }
-
         .btn-outline:hover {
             background: var(--accent-color);
             color: #ffffff;
         }
-
-        /* Buttons & Groups */
+        /* Optimized Mobile Button Grid & Padding */
         .btn-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.8rem;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.8rem;
+            margin-top: 1.5rem;
         }
-
         .btn {
-            display: inline-block;
+            display: block;
             text-align: center;
             background: var(--accent-color);
             color: #ffffff;
-            padding: 0.8rem 1.8rem;
-            border-radius: 10px;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+            font-size: 0.95rem;
             transition: 0.3s;
         }
-
         .btn:hover {
             opacity: 0.9;
-            transform: translateY(-2px);
         }
-
-        .btn-insta { background: #e1306c; box-shadow: 0 4px 15px rgba(225, 48, 108, 0.3); }
-        .btn-yt { background: #ff0000; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); }
-        .btn-github { background: #24292e; box-shadow: 0 4px 15px rgba(36, 41, 46, 0.3); }
-
+        .btn-insta {
+            background: #e1306c;
+            color: #fff;
+        }
+        .btn-yt {
+            background: #ff0000;
+            color: #fff;
+        }
+        .btn-github {
+            background: #333333;
+            color: #fff;
+        }
         /* Contact Form */
         form {
             display: flex;
             flex-direction: column;
-            gap: 1.2rem;
-            margin-top: 1.2rem;
+            gap: 1rem;
+            margin-top: 1rem;
         }
-
         input, textarea {
             width: 100%;
-            padding: 1rem;
+            padding: 0.9rem;
             background: var(--inner-bg);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 8px;
             color: var(--text-color);
             font-size: 1rem;
-            outline: none;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
         }
-
         input:focus, textarea:focus {
             border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+            outline: none;
         }
-
         footer {
             text-align: center;
-            padding: 2.5rem;
+            padding: 2rem;
             color: var(--text-muted);
             font-size: 0.9rem;
             border-top: 1px solid var(--border-color);
-            margin-top: 4rem;
-            background: var(--card-bg);
+            margin-top: 3rem;
+            background: var(--bg-color);
         }
-
         @media(max-width: 768px) {
             .nav-links { display: none; }
-            h1 { font-size: 2.3rem; }
-            section { padding: 2rem; }
+            h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
@@ -498,8 +437,8 @@
                 <!-- Project 5: Tic-Tac-Toe Game -->
                 <div class="project-card">
                     <div>
-                        <h3>🎮 Tic-Tac-Toe vs AI</h3>
-                        <p>A classic Zero-Kanta web game featuring AI opponent mode, scoreboards, turn indicator, and winning animation.</p>
+                        <h3>🎮 Tic-Tac-Toe Game</h3>
+                        <p>A classic 2-player Zero-Kanta web game featuring scoreboards, turn indicator, and winning animation built with JavaScript.</p>
                     </div>
                     <div class="project-links">
                         <a href="tictactoe.html" target="_blank" class="btn-sm btn-primary">🚀 Launch App</a>
@@ -507,19 +446,7 @@
                     </div>
                 </div>
 
-                <!-- Project 6: CSS Gradient Generator -->
-                <div class="project-card">
-                    <div>
-                        <h3>🎨 CSS Gradient Generator</h3>
-                        <p>A professional utility tool to generate stunning custom CSS background gradients, customize colors, and copy code instantly.</p>
-                    </div>
-                    <div class="project-links">
-                        <a href="gradient.html" target="_blank" class="btn-sm btn-primary">🚀 Launch App</a>
-                        <a href="https://github.com/Priytamkrp/priytamkrp.github.io" target="_blank" class="btn-sm btn-outline">View Code</a>
-                    </div>
-                </div>
-
-                <!-- Project 7: Video Editing & Reels Portfolio -->
+                <!-- Project 6: Video Editing & Reels Portfolio -->
                 <div class="project-card">
                     <div>
                         <h3>🎬 Video Editing & Reels Portfolio</h3>
@@ -530,7 +457,7 @@
                     </div>
                 </div>
 
-                <!-- Project 8: GP Dumka CSE & Vlogs -->
+                <!-- Project 7: GP Dumka CSE & Vlogs -->
                 <div class="project-card">
                     <div>
                         <h3>🎮 GP Dumka CSE & Vlogs</h3>
@@ -547,4 +474,66 @@
         <section id="certificates">
             <h2>Certificates & Achievements</h2>
             <div class="cert-grid">
-                <div
+                <div class="cert-card">
+                    <h3>🏆 Computer Science Fundamentals</h3>
+                    <p>Successfully initiating core coursework in Computer Science & Engineering at Government Polytechnic, Dumka.</p>
+                </div>
+                <div class="cert-card">
+                    <h3>📜 Web Development & GitHub</h3>
+                    <p>Mastered building and deploying responsive web pages live using HTML, CSS, and GitHub Pages infrastructure.</p>
+                </div>
+                <div class="cert-card">
+                    <h3>🌟 Digital Content Creator</h3>
+                    <p>Recognized for successfully managing online channels (VlogGiri & GP Dumka CSE) with active video editing and community engagement.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact & Social Media Section -->
+        <section id="contact">
+            <h2>Get In Touch & Socials</h2>
+            <p>Agar aap mujhse connect karna chahte hain, ya mere channels/projects check karna chahte hain, toh yahan se connect kar sakte hain:</p>
+            
+            <form action="mailto:priytamk45@gmail.com" method="POST" enctype="text/plain">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+                <button type="submit" class="btn" style="border:none; cursor:pointer; width:100%;">Send Message</button>
+            </form>
+
+            <!-- Responsive Button Grid -->
+            <div class="btn-group" style="margin-top: 2rem;">
+                <a href="mailto:priytamk45@gmail.com" class="btn">Email Me</a>
+                <a href="https://instagram.com/pirtuu_621" target="_blank" class="btn btn-insta">Instagram</a>
+                <a href="https://youtube.com/@gpdumkacse" target="_blank" class="btn btn-yt">YouTube</a>
+                <a href="https://github.com/Priytamkrp" target="_blank" class="btn btn-github">GitHub</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer 
+        <!-- Theme Toggle Script -->
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            
+            // Save preference in localStorage so it remembers the choice
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Check user's saved preference when page loads
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('theme');
+            // By default it is Light mode. If user previously chose dark, apply it:
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+        }
+    </script>
+    
+
+    
