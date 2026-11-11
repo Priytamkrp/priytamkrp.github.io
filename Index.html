@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priytam Kumar | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+        header {
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-bottom: 1px solid #334155;
+        }
+        .profile-img-container {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            border: 3px solid #38bdf8;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1e293b;
+        }
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .avatar-initials {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #38bdf8;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #f8fafc;
+        }
+        .tagline {
+            font-size: 1.1rem;
+            color: #38bdf8;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        section {
+            background: #1e293b;
+            padding: 1.8rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #334155;
+        }
+        h2 {
+            font-size: 1.5rem;
+            color: #38bdf8;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 0.5rem;
+        }
+        p, li {
+            color: #cbd5e1;
+            font-size: 1rem;
+        }
+        ul {
+            list-style: none;
+        }
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .skill-tag {
+            background: #0f172a;
+            color: #38bdf8;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+        }
+        .btn {
+            display: inline-block;
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #0284c7;
+            color: #fff;
+        }
+        .footer-badge {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid #334155;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #cbd5e1;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+        .footer-badge a {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="profile-img-container">
+            <img src="photo.jpg" alt="Priytam Kumar" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="avatar-initials" style="display:none;">PK</div>
+        </div>
+        <h1>Priytam Kumar</h1>
+        <div class="tagline">Computer Science Engineering Student</div>
+        <p>Government Polytechnic, Dumka (1st Year)</p>
+    </header>
+
+    <div class="container">
+        <section id="about">
+            <h2>About Me</h2>
+            <p>Namaste! Main Priytam Kumar hoon, Government Polytechnic Dumka se Computer Science Engineering ka 1st year student. Mujhe tech, programming aur nayi digital skills seekhne me kafi interest hai. Main aage chalkar software development aur web technologies me apna career banana chahta hoon.</p>
+        </section>
+
+        <section id="education">
+            <h2>Education</h2>
+            <p><strong>Diploma in Computer Science & Engineering</strong></p>
+            <p>Government Polytechnic, Dumka — 1st Year (Pursuing)</p>
+        </section>
+
+        <section id="skills">
+            <h2>Skills & Interests</h2>
+            <div class="skills-list">
+                <span class="skill-tag">Computer Science Fundamentals</span>
+                <span class="skill-tag">Programming Basics</span>
+                <span class="skill-tag">Web Development (Learning)</span>
+                <span class="skill-tag">Problem Solving</span>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <p>Agar aap mujhse kisi project ya study regarding connect karna chahte hain, toh email kar sakte hain:</p>
+            <a href="mailto:priytamk45@gmail.com" class="btn">Email Me</a>
+        </section>
+    </div>
+
+    <div class="footer-badge">
+        Powered by <a href="https://aigurukool.in" target="_blank">AI Gurukool</a>
+    </div>
+
+</body>
+</html>
