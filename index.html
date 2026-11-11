@@ -190,14 +190,14 @@
             color: var(--accent-color);
             text-align: center;
         }
-        /* Projects Grid & Action Links */
-        .projects-grid {
+        /* Projects & Certificates Grid */
+        .projects-grid, .cert-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             margin-top: 1rem;
         }
-        .project-card {
+        .project-card, .cert-card {
             background: var(--inner-bg);
             padding: 1.5rem;
             border-radius: 12px;
@@ -207,11 +207,11 @@
             justify-content: space-between;
             transition: all 0.3s ease;
         }
-        .project-card:hover {
+        .project-card:hover, .cert-card:hover {
             border-color: var(--accent-color);
             transform: translateY(-5px);
         }
-        .project-card h3 {
+        .project-card h3, .cert-card h3 {
             color: var(--accent-color);
             font-size: 1.2rem;
             margin-bottom: 0.8rem;
@@ -325,6 +325,7 @@
                 <li><a href="#education">Education</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#certificates">Certificates</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <button class="theme-toggle" onclick="toggleTheme()">☀️ / 🌙</button>
@@ -408,6 +409,25 @@
                     <div class="project-links">
                         <a href="https://youtube.com/@gpdumkacse" target="_blank" class="btn-sm btn-primary">Watch Channel</a>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certificates & Achievements Section -->
+        <section id="certificates">
+            <h2>Certificates & Achievements</h2>
+            <div class="cert-grid">
+                <div class="cert-card">
+                    <h3>🏆 Computer Science Fundamentals</h3>
+                    <p>Successfully initiating core coursework in Computer Science & Engineering at Government Polytechnic, Dumka[span_2](start_span)[span_2](end_span).</p>
+                </div>
+                <div class="cert-card">
+                    <h3>📜 Web Development & GitHub</h3>
+                    <p>Mastered building and deploying responsive web pages live using HTML, CSS, and GitHub Pages infrastructure.</p>
+                </div>
+                <div class="cert-card">
+                    <h3>🌟 Digital Content Creator</h3>
+                    <p>Recognized for successfully managing online channels (VlogGiri & GP Dumka CSE) with active video editing and community engagement.</p>
                 </div>
             </div>
         </section>
