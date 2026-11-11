@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Priytam Kumar | Professional Portfolio</title>
+    <!-- Favicon Browser Tab Icon -->
+    <link rel="icon" type="image/jpeg" href="photo.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -247,21 +249,23 @@
             background: var(--accent-color);
             color: var(--bg-color);
         }
-        /* Buttons */
+        /* Optimized Mobile Button Grid & Padding */
         .btn-group {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.8rem;
             margin-top: 1.5rem;
         }
         .btn {
-            display: inline-block;
+            display: block;
+            text-align: center;
             background: var(--accent-color);
             color: var(--bg-color);
-            padding: 0.7rem 1.5rem;
+            padding: 0.7rem 1rem;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
+            font-size: 0.95rem;
             transition: 0.3s;
         }
         .btn:hover {
@@ -441,14 +445,15 @@
                 <input type="text" name="name" placeholder="Your Name" required>
                 <input type="email" name="email" placeholder="Your Email" required>
                 <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
-                <button type="submit" class="btn" style="border:none; cursor:pointer;">Send Message</button>
+                <button type="submit" class="btn" style="border:none; cursor:pointer; width:100%;">Send Message</button>
             </form>
 
+            <!-- Responsive Button Grid -->
             <div class="btn-group" style="margin-top: 2rem;">
                 <a href="mailto:priytamk45@gmail.com" class="btn">Email Me</a>
-                <a href="https://instagram.com/pirtuu_621" target="_blank" class="btn btn-insta">Instagram (@pirtuu_621)</a>
-                <a href="https://youtube.com/@gpdumkacse" target="_blank" class="btn btn-yt">YouTube (GP Dumka CSE)</a>
-                <a href="https://github.com/Priytamkrp" target="_blank" class="btn btn-github">GitHub Profile</a>
+                <a href="https://instagram.com/pirtuu_621" target="_blank" class="btn btn-insta">Instagram</a>
+                <a href="https://youtube.com/@gpdumkacse" target="_blank" class="btn btn-yt">YouTube</a>
+                <a href="https://github.com/Priytamkrp" target="_blank" class="btn btn-github">GitHub</a>
             </div>
         </section>
     </div>
