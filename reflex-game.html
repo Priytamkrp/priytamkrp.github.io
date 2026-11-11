@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Neon Reflex Game | Priytam.dev</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #07090e;
+            --card-bg: rgba(18, 24, 38, 0.85);
+            --accent-cyan: #00e5ff;
+            --accent-pink: #ff0055;
+            --accent-green: #00ff66;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --glow-cyan: rgba(0, 229, 255, 0.3);
+            --glow-pink: rgba(255, 0, 85, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; padding: 1.5rem 1rem; }
+
+        .container { max-width: 650px; margin: 0 auto; width: 100%; text-align: center; }
+
+        header h1 { font-family: 'Rajdhani', sans-serif; font-size: 2.3rem; color: #fff; margin-bottom: 0.2rem; }
+        header h1 span { color: var(--accent-cyan); }
+        header p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+        /* Game Stats Dashboard */
+        .stats-bar { display: flex; justify-content: space-around; background: var(--card-bg); border: 1px solid var(--border-color); padding: 0.8rem; border-radius: 12px; margin-bottom: 1rem; backdrop-filter: blur(10px); }
+        .stat-item { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+        .stat-value { font-family: 'Rajdhani', sans-serif; font-size: 1.4rem; color: var(--accent-cyan); font-weight: 700; display: block; }
+
+        /* Game Arena Box */
+        .game-arena { position: relative; width: 100%; height: 380px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; backdrop-filter: blur(10px); box-shadow: inset 0 0 20px rgba(0,0,0,0.8); margin-bottom: 1.2rem; }
+
+        /* Target Neon Dot */
+        .target { position: absolute; width: 45px; height: 45px; background: radial-gradient(circle, var(--accent-cyan) 0%, #0055ff 100%); border-radius: 50%; cursor: pointer; box-shadow: 0 0 15px var(--accent-cyan); display: none; transition: transform 0.1s ease; }
+        .target:active { transform: scale(0.85); }
+
+        /* Start / Action Button */
+        .btn-game { background: var(--accent-cyan); color: #000; border: none; padding: 0.8rem 2rem; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 0 15px var(--glow-cyan); transition: 0.2s; }
+        .btn-game:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .back-link { display: block; text-align: center; margin-top: 1.5rem; color: var(--text-muted); text-decoration: none; font-size: 0.85rem; }
+        .back-link:hover { color: var(--accent-cyan); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Cyber Neon <span>Reflex</span></h1>
+            <p>Test your speed! Tap the glowing cyber nodes as fast as you can.</p>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">Score <span class="stat-value" id="scoreDisplay">0</span></div>
+            <div class="stat-item">Time Left <span class="stat-value" id="timeDisplay">30s</span></div>
+            <div class="stat-item">High Score <span class="stat-value" id="highScoreDisplay">0</span></div>
+        </div>
+
+        <!-- Arena -->
+        <div class="game-arena" id="gameArena">
+            <div id="targetNode" class="target" onclick="hitTarget()"></div>
+            <div id="startOverlay" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(7, 9, 14, 0.85);">
+                <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 1.8rem; margin-bottom: 1rem; color: #fff;">Ready to Test Reflexes?</h3>
+                <button class="btn-game" onclick="startGame()">Start Game</button>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-link">← Return to Main Portfolio</a>
+    </div>
+
+    <script>
+        let score = 0;
+        let timeLeft = 30;
+        let gameInterval = null;
+        let timerInterval = null;
+        let isPlaying = false;
+
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const timeDisplay = document.getElementById('timeDisplay');
+        const highScoreDisplay = document.getElementById('highScoreDisplay');
+        const targetNode = document.getElementById('targetNode');
+        const startOverlay = document.getElementById('startOverlay');
+        const gameArena = document.getElementById('gameArena');
+
+        // Load saved High Score
+        let highScore = localStorage.getItem('cyberHighScore') || 0;
+        highScoreDisplay.innerText = highScore;
+
+        function startGame() {
+            score = 0;
+            timeLeft = 30;
+            scoreDisplay.innerText = score;
+            timeDisplay.innerText = timeLeft + 's';
+            startOverlay.style.display = 'none';
+            targetNode.style.display = 'block';
+            isPlaying = true;
+
+            moveTarget();
+
+            // Countdown timer
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timeDisplay.innerText = timeLeft + 's';
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+
+            // Move target automatically every 900ms if missed
+            gameInterval = setInterval(moveTarget, 900);
+        }
+
+        function moveTarget() {
+            if (!isPlaying) return;
+            const arenaWidth = gameArena.clientWidth - 50;
+            const arenaHeight = gameArena.clientHeight - 50;
+
+            const randomX = Math.floor(Math.random() * arenaWidth);
+            const randomY = Math.floor(Math.random() * arenaHeight);
+
+            targetNode.style.left = randomX + 'px';
+            targetNode.style.top = randomY + 'px';
+        }
+
+        function hitTarget() {
+            if (!isPlaying) return;
+            score++;
+            scoreDisplay.innerText = score;
+            moveTarget();
+        }
+
+        function endGame() {
+            isPlaying = false;
+            clearInterval(timerInterval);
+            clearInterval(gameInterval);
+            targetNode.style.display = 'none';
+
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('cyberHighScore', highScore);
+                highScoreDisplay.innerText = highScore;
+            }
+
+            startOverlay.style.display = 'flex';
+            startOverlay.querySelector('h3').innerText = `Game Over! Score: ${score}`;
+            startOverlay.querySelector('.btn-game').innerText = 'Play Again';
+        }
+    </script>
+</body>
+</html>
