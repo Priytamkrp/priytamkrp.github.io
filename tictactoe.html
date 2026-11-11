@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe vs AI | Designed by Priytam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --accent-color: #38bdf8;
+            --player-x: #ef4444;
+            --player-o: #22c55e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .game-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Scoreboard */
+        .scoreboard {
+            display: flex;
+            justify-content: space-around;
+            background: #1f2937;
+            padding: 0.8rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .score-box {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .score-box span {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .x-score { color: var(--player-x); }
+        .o-score { color: var(--player-o); }
+
+        /* Game Board Grid */
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .cell {
+            width: 100%;
+            aspect-ratio: 1;
+            background: #1f2937;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .cell:hover:not(.taken) {
+            background: #374151;
+            border-color: var(--accent-color);
+        }
+
+        .cell.x {
+            color: var(--player-x);
+        }
+
+        .cell.o {
+            color: var(--player-o);
+        }
+
+        .cell.winning {
+            background: #0284c7 !important;
+            color: #ffffff !important;
+            animation: pulse 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(0.95); }
+            to { transform: scale(1.05); }
+        }
+
+        /* Controls & Status */
+        .status {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            min-height: 24px;
+        }
+
+        .btn-reset {
+            background: var(--accent-color);
+            color: #0b0f19;
+            border: none;
+            padding: 0.7rem 1.8rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-reset:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .branding {
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>❌ Tic-Tac-Toe 🤖</h1>
+        <p class="subtitle">Player (X) vs Computer AI (O)</p>
+
+        <!-- Scoreboard -->
+        <div class="scoreboard">
+            <div class="score-box x-score">
+                You (X)
+                <span id="scoreX">0</span>
+            </div>
+            <div class="score-box o-score">
+                AI (O)
+                <span id="scoreO">0</span>
+            </div>
+        </div>
+
+        <!-- Status Message -->
+        <div class="status" id="statusMessage">Your Turn (X)</div>
+
+        <!-- Board Grid -->
+        <div class="board" id="board">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+
+        <!-- Reset Button -->
+        <button class="btn-reset" onclick="resetGame()">Restart Game 🔄</button>
+
+        <div class="branding">Designed by Priytam</div>
+    </div>
+
+    <script>
+        const cells = document.querySelectorAll('.cell');
+        const statusMessage = document.getElementById('statusMessage');
+        const scoreXElem = document.getElementById('scoreX');
+        const scoreOElem = document.getElementById('scoreO');
+
+        let currentPlayer = 'X'; // X is Human, O is AI
+        let gameState = ["", "", "", "", "", "", "", "", ""];
+        let gameActive = true;
+        let scoreX = 0;
+        let scoreO = 0;
+
+        const winningConditions = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]
+        ];
+
+        cells.forEach(cell => {
+            cell.addEventListener('click', handleCellClick);
+        });
+
+        function handleCellClick(e) {
+            const clickedCell = e.target;
+            const cellIndex = parseInt(clickedCell.getAttribute('data-index'));
+
+            if (gameState[cellIndex] !== "" || !gameActive || currentPlayer !== 'X') {
+                return;
+            }
+
+            // Human Move
+            makeMove(cellIndex, 'X');
+
+            if (checkWinOrDraw('X')) return;
+
+            // Switch to AI
+            currentPlayer = 'O';
+            statusMessage.innerText = "AI is thinking... 🤖";
+
+            // Delay AI move slightly for realistic feel
+            setTimeout(aiMove, 500);
+        }
+
+        function makeMove(index, player) {
+            gameState[index] = player;
+            cells[index].innerText = player;
+            cells[index].classList.add(player.toLowerCase(), 'taken');
+        }
+
+        function aiMove() {
+            if (!gameActive) return;
+
+            // Find all empty cells
+            let emptyCells = [];
+            gameState.forEach((val, idx) => {
+                if (val === "") emptyCells.push(idx);
+            });
+
+            if (emptyCells.length === 0) return;
+
+            // Simple AI Strategy: Pick a random empty cell
+            let randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+
+            makeMove(randomIndex, 'O');
+
+            if (checkWinOrDraw('O')) return;
+
+            // Switch back to Human
+            currentPlayer = 'X';
+            statusMessage.innerText = "Your Turn (X)";
+        }
+
+        function checkWinOrDraw(player) {
+            let roundWon = false;
+            let winningCombo = [];
+
+            for (let i = 0; i < winningConditions.length; i++) {
+                const winCondition = winningConditions[i];
+                let a = gameState[winCondition[0]];
+                let b = gameState[winCondition[1]];
+                let c = gameState[winCondition[2]];
+
+                if (a === '' || b === '' || c === '') continue;
+                if (a === b && b === c) {
+                    roundWon = true;
+                    winningCombo = winCondition;
+                    break;
+                }
+            }
+
+            if (roundWon) {
+                if (player === 'X') {
+                    statusMessage.innerText = "🎉 You Win!";
+                    scoreX++;
+                    scoreXElem.innerText = scoreX;
+                } else {
+                    statusMessage.innerText = "🤖 AI Wins! Better luck next time.";
+                    scoreO++;
+                    scoreOElem.innerText = scoreO;
+                }
+                gameActive = false;
+
+                winningCombo.forEach(index => {
+                    cells[index].classList.add('winning');
+                });
+                return true;
+            }
+
+            if (!gameState.includes("")) {
+                statusMessage.innerText = "🤝 It's a Draw!";
+                gameActive = false;
+                return true;
+            }
+
+            return false;
+        }
+
+        function resetGame() {
+            currentPlayer = 'X';
+            gameState = ["", "", "", "", "", "", "", "", ""];
+            gameActive = true;
+            statusMessage.innerText = `Your Turn (X)`;
+            
+            cells.forEach(cell => {
+                cell.innerText = "";
+                cell.className = 'cell';
+            });
+        }
+    </script>
+</body>
+</html>
