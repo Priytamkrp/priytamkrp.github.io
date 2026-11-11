@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator | Designed by Priytam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --inner-bg: #f1f5f9;
+            --text-color: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --accent-color: #0284c7;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+        .dark-mode {
+            --bg-color: #030712;
+            --card-bg: #0f172a;
+            --inner-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+            --accent-color: #38bdf8;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; transition: 0.3s; }
+        body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 1.5rem; }
+        .age-container { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 2.5rem; width: 100%; max-width: 420px; box-shadow: var(--shadow); text-align: center; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+        h1 { font-size: 1.4rem; color: var(--accent-color); font-weight: 700; }
+        .theme-toggle { background: var(--inner-bg); border: 1px solid var(--border-color); color: var(--accent-color); padding: 0.4rem 0.8rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
+        .subtitle { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+        
+        .input-group { display: flex; gap: 10px; margin-bottom: 1.5rem; }
+        input[type="date"] { flex: 1; padding: 0.8rem 1rem; background: var(--inner-bg); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-color); font-size: 0.95rem; outline: none; }
+        input[type="date"]:focus { border-color: var(--accent-color); }
+        
+        .btn-calculate { width: 100%; padding: 0.8rem; background: var(--accent-color); color: #fff; border: none; border-radius: 10px; font-weight: 600; font-size: 1rem; cursor: pointer; margin-bottom: 1.5rem; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25); }
+        .btn-calculate:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .result-box { background: var(--inner-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem; margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: 600; color: var(--accent-color); display: none; }
+        
+        .back-link { display: block; text-align: center; color: var(--accent-color); text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+        .back-link:hover { text-decoration: underline; }
+        .branding { margin-top: 1.5rem; text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+    <div class="age-container">
+        <div class="top-bar">
+            <h1>🎂 Age Calculator</h1>
+            <button class="theme-toggle" onclick="toggleTheme()">☀️ / 🌙</button>
+        </div>
+        <p class="subtitle">Calculate your exact age in years, months, and days</p>
+
+        <div class="input-group">
+            <input type="date" id="dateInput">
+            <button class="btn-calculate" onclick="calculateAge()" style="width: auto; margin:0; padding: 0.8rem 1.2rem;">Calculate</button>
+        </div>
+
+        <div class="result-box" id="resultBox"></div>
+
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+        <div class="branding">Designed by Priytam</div>
+    </div>
+
+    <script>
+        const dateInput = document.getElementById('dateInput');
+        dateInput.max = new Date().toISOString().split("T")[0];
+        const resultBox = document.getElementById('resultBox');
+
+        function calculateAge() {
+            const birthDate = new Date(dateInput.value);
+            if(!dateInput.value) {
+                resultBox.style.display = "block";
+                resultBox.innerText = "Please select your birth date!";
+                return;
+            }
+
+            const today = new Date();
+
+            let d1 = birthDate.getDate();
+            let m1 = birthDate.getMonth() + 1;
+            let y1 = birthDate.getFullYear();
+
+            let d2 = today.getDate();
+            let m2 = today.getMonth() + 1;
+            let y2 = today.getFullYear();
+
+            let d3, m3, y3;
+
+            y3 = y2 - y1;
+
+            if (m2 >= m1) {
+                m3 = m2 - m1;
+            } else {
+                y3--;
+                m3 = 12 + m2 - m1;
+            }
+
+            if (d2 >= d1) {
+                d3 = d2 - d1;
+            } else {
+                m3--;
+                d3 = getDaysInMonth(y1, m1) + d2 - d1;
+            }
+
+            if (m3 < 0) {
+                m3 = 11;
+                y3--;
+            }
+
+            resultBox.style.display = "block";
+            resultBox.innerHTML = `🎉 You are <br><span style="font-size: 1.3rem;">${y3} Years, ${m3} Months, ${d3} Days</span> old!`;
+        }
+
+        function getDaysInMonth(year, month) {
+            return new Date(year, month, 0).getDate();
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        window.onload = function() {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+        }
+    </script>
+</body>
+</html>
