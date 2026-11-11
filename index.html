@@ -6,16 +6,39 @@
     <title>Priytam Kumar | Professional Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --inner-bg: #0b0f19;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --accent-color: #38bdf8;
+            --nav-bg: rgba(15, 23, 42, 0.95);
+        }
+
+        .light-mode {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --inner-bg: #f8fafc;
+            --text-color: #0f172a;
+            --text-muted: #475569;
+            --border-color: #cbd5e1;
+            --accent-color: #0284c7;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
             scroll-behavior: smooth;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         body {
-            background-color: #0b0f19;
-            color: #f8fafc;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.7;
         }
         /* Navbar */
@@ -24,20 +47,25 @@
             top: 0;
             left: 0;
             width: 100%;
-            background: rgba(15, 23, 42, 0.95);
+            background: var(--nav-bg);
             backdrop-filter: blur(10px);
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1rem 5%;
-            border-bottom: 1px solid #1e293b;
+            border-bottom: 1px solid var(--border-color);
             z-index: 1000;
         }
         .nav-logo {
             font-weight: 700;
             font-size: 1.1rem;
-            color: #38bdf8;
+            color: var(--accent-color);
             text-decoration: none;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
         }
         .nav-links {
             display: flex;
@@ -45,14 +73,28 @@
             list-style: none;
         }
         .nav-links a {
-            color: #94a3b8;
+            color: var(--text-muted);
             text-decoration: none;
             font-size: 0.95rem;
             font-weight: 500;
             transition: color 0.3s;
         }
         .nav-links a:hover {
-            color: #38bdf8;
+            color: var(--accent-color);
+        }
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--accent-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .theme-toggle:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
         }
         /* Header Hero Section */
         header {
@@ -63,21 +105,21 @@
             align-items: center;
             text-align: center;
             padding: 8rem 2rem 4rem 2rem;
-            background: radial-gradient(circle at center, #1e293b 0%, #0b0f19 70%);
-            border-bottom: 1px solid #1e293b;
+            background: radial-gradient(circle at center, var(--card-bg) 0%, var(--bg-color) 70%);
+            border-bottom: 1px solid var(--border-color);
         }
         .profile-img-container {
             width: 160px;
             height: 160px;
             border-radius: 50%;
             margin-bottom: 1.5rem;
-            border: 4px solid #38bdf8;
+            border: 4px solid var(--accent-color);
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #1e293b;
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+            background-color: var(--card-bg);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.2);
         }
         .profile-img-container img {
             width: 100%;
@@ -87,22 +129,22 @@
         .avatar-initials {
             font-size: 3rem;
             font-weight: 700;
-            color: #38bdf8;
+            color: var(--accent-color);
         }
         h1 {
             font-size: 2.8rem;
             margin-bottom: 0.5rem;
-            color: #f8fafc;
+            color: var(--text-color);
         }
         .tagline {
             font-size: 1.2rem;
-            color: #38bdf8;
+            color: var(--accent-color);
             margin-bottom: 1rem;
             font-weight: 500;
         }
         .hero-desc {
             max-width: 600px;
-            color: #94a3b8;
+            color: var(--text-muted);
             margin-bottom: 1.5rem;
             font-size: 1rem;
         }
@@ -113,22 +155,22 @@
             padding: 3rem 1.5rem;
         }
         section {
-            background: #111827;
+            background: var(--card-bg);
             padding: 2.5rem;
             border-radius: 16px;
             margin-bottom: 2rem;
-            border: 1px solid #1f2937;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
         h2 {
             font-size: 1.8rem;
-            color: #38bdf8;
+            color: var(--accent-color);
             margin-bottom: 1.5rem;
-            border-bottom: 2px solid #1f2937;
+            border-bottom: 2px solid var(--border-color);
             padding-bottom: 0.5rem;
         }
         p, li {
-            color: #cbd5e1;
+            color: var(--text-muted);
             font-size: 1.05rem;
             margin-bottom: 1rem;
         }
@@ -140,15 +182,15 @@
             margin-top: 1rem;
         }
         .skill-box {
-            background: #0b0f19;
+            background: var(--inner-bg);
             padding: 1rem 1.2rem;
             border-radius: 10px;
-            border: 1px solid #1f2937;
+            border: 1px solid var(--border-color);
             font-weight: 500;
-            color: #38bdf8;
+            color: var(--accent-color);
             text-align: center;
         }
-        /* Projects Grid */
+        /* Projects Grid & Action Links */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -156,20 +198,54 @@
             margin-top: 1rem;
         }
         .project-card {
-            background: #0b0f19;
+            background: var(--inner-bg);
             padding: 1.5rem;
             border-radius: 12px;
-            border: 1px solid #1f2937;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             transition: all 0.3s ease;
         }
         .project-card:hover {
-            border-color: #38bdf8;
+            border-color: var(--accent-color);
             transform: translateY(-5px);
         }
         .project-card h3 {
-            color: #38bdf8;
+            color: var(--accent-color);
             font-size: 1.2rem;
             margin-bottom: 0.8rem;
+        }
+        .project-links {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+        .btn-sm {
+            padding: 0.4rem 0.9rem;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        .btn-primary {
+            background: var(--accent-color);
+            color: var(--bg-color);
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+        }
+        .btn-outline:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
         }
         /* Buttons */
         .btn-group {
@@ -180,8 +256,8 @@
         }
         .btn {
             display: inline-block;
-            background: #38bdf8;
-            color: #0b0f19;
+            background: var(--accent-color);
+            color: var(--bg-color);
             padding: 0.7rem 1.5rem;
             border-radius: 8px;
             text-decoration: none;
@@ -189,29 +265,19 @@
             transition: 0.3s;
         }
         .btn:hover {
-            background: #0284c7;
-            color: #fff;
+            opacity: 0.9;
         }
         .btn-insta {
             background: #e1306c;
             color: #fff;
         }
-        .btn-insta:hover {
-            background: #c13584;
-        }
         .btn-yt {
             background: #ff0000;
             color: #fff;
         }
-        .btn-yt:hover {
-            background: #cc0000;
-        }
         .btn-github {
             background: #333333;
             color: #fff;
-        }
-        .btn-github:hover {
-            background: #24292e;
         }
         /* Contact Form */
         form {
@@ -223,24 +289,24 @@
         input, textarea {
             width: 100%;
             padding: 0.9rem;
-            background: #0b0f19;
-            border: 1px solid #1f2937;
+            background: var(--inner-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            color: #fff;
+            color: var(--text-color);
             font-size: 1rem;
         }
         input:focus, textarea:focus {
-            border-color: #38bdf8;
+            border-color: var(--accent-color);
             outline: none;
         }
         footer {
             text-align: center;
             padding: 2rem;
-            color: #64748b;
+            color: var(--text-muted);
             font-size: 0.9rem;
-            border-top: 1px solid #1f2937;
+            border-top: 1px solid var(--border-color);
             margin-top: 3rem;
-            background: #0b0f19;
+            background: var(--bg-color);
         }
         @media(max-width: 768px) {
             .nav-links { display: none; }
@@ -253,13 +319,16 @@
     <!-- Navigation Bar -->
     <nav>
         <a href="#" class="nav-logo">Priytam Kumar</a>
-        <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" onclick="toggleTheme()">☀️ / 🌙</button>
+        </div>
     </nav>
 
     <!-- Header Hero Section -->
@@ -273,7 +342,7 @@
         <p class="hero-desc">Passionate about coding, web technologies, video editing, and building engaging digital content from Dumka, Jharkhand.</p>
         <div class="btn-group">
             <a href="#projects" class="btn">View Projects</a>
-            <a href="#contact" class="btn" style="background:#38bdf8; color:#0b0f19;">Let's Connect</a>
+            <a href="#contact" class="btn">Let's Connect</a>
         </div>
     </header>
 
@@ -281,7 +350,7 @@
         <!-- About Section -->
         <section id="about">
             <h2>About Me</h2>
-            <p>Namaste! Main Priytam Kumar hoon, Government Polytechnic Dumka se Computer Science Engineering ka 1st-year student hoon[span_1](start_span)[span_1](end_span). Main technology, programming, aur digital creation (jaise video editing aur social media content management) me deep interest rakhta hoon.</p>
+            <p>Namaste! Main Priytam Kumar hoon, Government Polytechnic Dumka se Computer Science Engineering ka 1st-year student hoon[span_0](start_span)[span_0](end_span). Main technology, programming, aur digital creation (jaise video editing aur social media content management) me deep interest rakhta hoon.</p>
             <p>Mera aim ek skilled Software Developer aur Web Creator banne ka hai, jo modern tools aur creative ideas ka use karke unique solutions build kar sake.</p>
         </section>
 
@@ -289,8 +358,8 @@
         <section id="education">
             <h2>Education & Background</h2>
             <p><strong>🎓 Diploma in Computer Science & Engineering</strong></p>
-            <p>Government Polytechnic, Dumka — 1st Year (2026 - Present)[span_2](start_span)[span_2](end_span)</p>
-            <p style="margin-top: 1rem; color: #94a3b8;">Completed schooling with strong foundational basics and active participation in technical and digital media projects.</p>
+            <p>Government Polytechnic, Dumka — 1st Year (2026 - Present)[span_1](start_span)[span_1](end_span)</p>
+            <p style="margin-top: 1rem;">Completed schooling with strong foundational basics and active participation in technical and digital media projects.</p>
         </section>
 
         <!-- Skills Section -->
@@ -311,16 +380,34 @@
             <h2>Featured Projects & Works</h2>
             <div class="projects-grid">
                 <div class="project-card">
-                    <h3>🚀 Student Portfolio Website</h3>
-                    <p>A fully responsive, custom-coded modern personal portfolio web app built using advanced HTML5 and CSS3, hosted live on GitHub Pages.</p>
+                    <div>
+                        <h3>🚀 Student Portfolio Website</h3>
+                        <p>A fully responsive, custom-coded modern personal portfolio web app built using advanced HTML5 and CSS3, hosted live on GitHub Pages.</p>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://priytamkrp.github.io" target="_blank" class="btn-sm btn-primary">Live Demo</a>
+                        <a href="https://github.com/Priytamkrp/priytamkrp.github.io" target="_blank" class="btn-sm btn-outline">View Code</a>
+                    </div>
                 </div>
+
                 <div class="project-card">
-                    <h3>🎬 Video Editing & Reels Portfolio</h3>
-                    <p>Professional short-form content creation using mobile editing workflows, transparency masks, overlays, and catchy viral hooks for Instagram.</p>
+                    <div>
+                        <h3>🎬 Video Editing & Reels Portfolio</h3>
+                        <p>Professional short-form content creation using mobile editing workflows, transparency masks, overlays, and catchy viral hooks for Instagram.</p>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://instagram.com/pirtuu_621" target="_blank" class="btn-sm btn-primary">View Reels</a>
+                    </div>
                 </div>
+
                 <div class="project-card">
-                    <h3>🎮 GP Dumka CSE & Vlogs</h3>
-                    <p>Managing college lifestyle vlogging content and official updates for Government Polytechnic Dumka Computer Science department.</p>
+                    <div>
+                        <h3>🎮 GP Dumka CSE & Vlogs</h3>
+                        <p>Managing college lifestyle vlogging content and official updates for Government Polytechnic Dumka Computer Science department.</p>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://youtube.com/@gpdumkacse" target="_blank" class="btn-sm btn-primary">Watch Channel</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -337,7 +424,6 @@
                 <button type="submit" class="btn" style="border:none; cursor:pointer;">Send Message</button>
             </form>
 
-            <!-- Social Media Links Updated with GP Dumka CSE YouTube Channel -->
             <div class="btn-group" style="margin-top: 2rem;">
                 <a href="mailto:priytamk45@gmail.com" class="btn">Email Me</a>
                 <a href="https://instagram.com/pirtuu_621" target="_blank" class="btn btn-insta">Instagram (@pirtuu_621)</a>
@@ -352,6 +438,13 @@
         <p>© 2026 Priytam Kumar. All Rights Reserved.</p>
         <p style="margin-top: 0.3rem; font-size: 0.8rem;">Powered by Priytam Kumar</p>
     </footer>
+
+    <!-- Theme Toggle Script -->
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
+    </script>
 
 </body>
 </html>
