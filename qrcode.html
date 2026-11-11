@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator | Priytam.dev</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <!-- QRCode.js Library CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --bg-dark: #07090e;
+            --card-bg: rgba(18, 24, 38, 0.85);
+            --accent-cyan: #00e5ff;
+            --accent-green: #00ff66;
+            --accent-pink: #ff0055;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --glow-cyan: rgba(0, 229, 255, 0.25);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: background 0.3s; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; padding: 2rem 1rem; display: flex; flex-direction: column; justify-content: space-between; }
+
+        .container { max-width: 550px; margin: 0 auto; width: 100%; }
+
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { font-family: 'Rajdhani', sans-serif; font-size: 2.5rem; color: #fff; margin-bottom: 0.3rem; }
+        header h1 span { color: var(--accent-cyan); }
+        header p { color: var(--text-muted); font-size: 0.95rem; }
+
+        .qr-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; }
+
+        .input-group { margin-bottom: 1.5rem; text-align: left; }
+        .input-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 500; }
+        .input-field { width: 100%; padding: 0.9rem 1rem; background: #07090e; border: 1px solid var(--border-color); border-radius: 10px; color: #fff; font-size: 1rem; outline: none; }
+        .input-field:focus { border-color: var(--accent-cyan); box-shadow: 0 0 10px var(--glow-cyan); }
+
+        /* QR Code Output Box */
+        .qr-output-box { display: flex; flex-direction: column; align-items: center; justify-content: center; background: #07090e; border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; min-height: 220px; }
+        
+        #qrcode img { display: block; border-radius: 8px; padding: 10px; background: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.1); }
+        .placeholder-text { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Controls */
+        .btn { width: 100%; padding: 0.8rem; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; border: none; transition: 0.2s; }
+        .btn-primary { background: var(--accent-cyan); color: #000; box-shadow: 0 0 15px var(--glow-cyan); margin-bottom: 0.8rem; }
+        .btn-outline { background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .back-link { display: block; text-align: center; margin-top: 2rem; color: var(--text-muted); text-decoration: none; font-size: 0.85rem; }
+        .back-link:hover { color: var(--accent-cyan); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>QR Code <span>Generator</span></h1>
+            <p>Convert any text, link, or social profile into a scan-ready QR code instantly</p>
+        </header>
+
+        <div class="qr-card">
+            <div class="input-group">
+                <label for="textInput">Enter URL, Text or Profile Link:</label>
+                <input type="text" class="input-field" id="textInput" placeholder="https://youtube.com/@gpdumkacse" oninput="generateQR()">
+            </div>
+
+            <!-- QR Display Container -->
+            <div class="qr-output-box" id="qrBox">
+                <div id="qrcode"></div>
+                <div class="placeholder-text" id="placeholder">Your QR code will appear here...</div>
+            </div>
+
+            <button class="btn btn-primary" id="downloadBtn" style="display: none;" onclick="downloadQR()">📥 Download QR Code</button>
+            <button class="btn btn-outline" onclick="clearQR()">Clear Field</button>
+        </div>
+
+        <a href="index.html" class="back-link">← Return to Main Portfolio</a>
+    </div>
+
+    <script>
+        let qrInstance = null;
+
+        function generateQR() {
+            const text = document.getElementById('textInput').value.trim();
+            const qrcodeContainer = document.getElementById('qrcode');
+            const placeholder = document.getElementById('placeholder');
+            const downloadBtn = document.getElementById('downloadBtn');
+
+            qrcodeContainer.innerHTML = "";
+
+            if (text.length > 0) {
+                placeholder.style.display = 'none';
+                downloadBtn.style.display = 'block';
+
+                // Generate QR Code using qrcode.js library
+                qrInstance = new QRCode(qrcodeContainer, {
+                    text: text,
+                    width: 180,
+                    height: 180,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            } else {
+                placeholder.style.display = 'block';
+                downloadBtn.style.display = 'none';
+            }
+        }
+
+        function downloadQR() {
+            const qrImage = document.querySelector('#qrcode img');
+            if (qrImage) {
+                const imageUrl = qrImage.src;
+                const link = document.createElement('a');
+                link.href = imageUrl;
+                link.download = 'priytam-qrcode.png';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+        function clearQR() {
+            document.getElementById('textInput').value = '';
+            document.getElementById('qrcode').innerHTML = '';
+            document.getElementById('placeholder').style.display = 'block';
+            document.getElementById('downloadBtn').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
