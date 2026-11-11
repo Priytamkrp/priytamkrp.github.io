@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Cyber Dodge | Built by Priytam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #07090e;
+            --accent-cyan: #00e5ff;
+            --accent-pink: #ff0055;
+            --text-main: #f8fafc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; user-select: none; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+
+        .game-container { text-align: center; width: 100%; max-width: 400px; padding: 1rem; }
+
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; }
+        .score-board { color: var(--accent-cyan); text-shadow: 0 0 10px rgba(0,229,255,0.4); }
+        .highscore-board { color: var(--accent-pink); text-shadow: 0 0 10px rgba(255,0,85,0.4); }
+
+        canvas { background: #0c101d; border: 2px solid #1e293b; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); display: block; margin: 0 auto; cursor: pointer; }
+
+        .controls-hint { margin-top: 15px; font-size: 0.85rem; color: #94a3b8; font-family: 'Share Tech Mono', monospace; }
+
+        .back-btn { display: inline-block; margin-top: 15px; text-decoration: none; color: #94a3b8; font-size: 0.9rem; font-weight: 600; transition: 0.2s; }
+        .back-btn:hover { color: var(--accent-cyan); }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <div class="header">
+            <div class="score-board">SCORE: <span id="scoreVal">0</span></div>
+            <div class="highscore-board">BEST: <span id="highScoreVal">0</span></div>
+        </div>
+
+        <canvas id="gameCanvas" width="360" height="480"></canvas>
+
+        <div class="controls-hint">Tap / Move Left-Right to Dodge Obstacles!</div>
+        <a href="index.html" class="back-btn">← Back to Portfolio</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let score = 0;
+        let highScore = localStorage.getItem("cyber_highscore") || 0;
+        document.getElementById("highScoreVal").innerText = highScore;
+
+        let isGameOver = false;
+
+        // Player Object
+        let player = {
+            x: canvas.width / 2 - 15,
+            y: canvas.height - 50,
+            width: 30,
+            height: 30,
+            speed: 6,
+            dx: 0
+        };
+
+        // Obstacles Array
+        let obstacles = [];
+        let frameCount = 0;
+
+        // Controls (Touch & Keyboard)
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowLeft" || e.key === "a") player.dx = -player.speed;
+            if (e.key === "ArrowRight" || e.key === "d") player.dx = player.speed;
+            if (e.key === " " && isGameOver) resetGame();
+        });
+
+        window.addEventListener("keyup", (e) => {
+            if ((e.key === "ArrowLeft" || e.key === "a") && player.dx < 0) player.dx = 0;
+            if ((e.key === "ArrowRight" || e.key === "d") && player.dx > 0) player.dx = 0;
+        });
+
+        // Mobile Touch Support
+        canvas.addEventListener("touchmove", (e) => {
+            let rect = canvas.getBoundingClientRect();
+            let touchX = e.touches[0].clientX - rect.left;
+            player.x = touchX - player.width / 2;
+            e.preventDefault();
+        }, { passive: false });
+
+        canvas.addEventListener("click", () => {
+            if (isGameOver) resetGame();
+        });
+
+        function spawnObstacle() {
+            let size = Math.random() * 20 + 20;
+            let x = Math.random() * (canvas.width - size);
+            let speed = Math.random() * 2 + 3 + (score / 10); // Increases difficulty
+            obstacles.push({ x: x, y: -size, width: size, height: size, speed: speed });
+        }
+
+        function update() {
+            if (isGameOver) return;
+
+            // Move Player
+            player.x += player.dx;
+            if (player.x < 0) player.x = 0;
+            if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
+
+            // Spawn Obstacles
+            frameCount++;
+            if (frameCount % 45 === 0) {
+                spawnObstacle();
+            }
+
+            // Update Obstacles
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                obstacles[i].y += obstacles[i].speed;
+
+                // Collision Detection
+                if (
+                    player.x < obstacles[i].x + obstacles[i].width &&
+                    player.x + player.width > obstacles[i].x &&
+                    player.y < obstacles[i].y + obstacles[i].height &&
+                    player.y + player.height > obstacles[i].y
+                ) {
+                    isGameOver = true;
+                    if (score > highScore) {
+                        highScore = score;
+                        localStorage.setItem("cyber_highscore", highScore);
+                        document.getElementById("highScoreVal").innerText = highScore;
+                    }
+                }
+
+                // Remove off-screen obstacles & add score
+                if (obstacles[i].y > canvas.height) {
+                    obstacles.splice(i, 1);
+                    score += 1;
+                    document.getElementById("scoreVal").innerText = score;
+                }
+            }
+        }
+
+        function draw() {
+            // Clear Screen
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Player (Neon Cyan Box)
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = "#00e5ff";
+            ctx.fillStyle = "#00e5ff";
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+
+            // Draw Obstacles (Neon Pink Boxes)
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = "#ff0055";
+            ctx.fillStyle = "#ff0055";
+            for (let obs of obstacles) {
+                ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+            }
+
+            ctx.shadowBlur = 0; // Reset shadow
+
+            // Game Over Screen
+            if (isGameOver) {
+                ctx.fillStyle = "rgba(7, 9, 14, 0.85)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = "#ff0055";
+                ctx.font = "bold 28px Rajdhani";
+                ctx.textAlign = "center";
+                ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2 - 20);
+
+                ctx.fillStyle = "#f8fafc";
+                ctx.font = "18px Rajdhani";
+                ctx.fillText("Tap or Press Space to Restart", canvas.width / 2, canvas.height / 2 + 20);
+            }
+        }
+
+        function resetGame() {
+            score = 0;
+            document.getElementById("scoreVal").innerText = score;
+            obstacles = [];
+            player.x = canvas.width / 2 - 15;
+            isGameOver = false;
+        }
+
+        function loop() {
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        loop();
+    </script>
+</body>
+</html>
