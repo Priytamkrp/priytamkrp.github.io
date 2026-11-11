@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soundboard & Focus Beats | Priytam.dev</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #07090e;
+            --card-bg: rgba(18, 24, 38, 0.85);
+            --accent-cyan: #00e5ff;
+            --accent-green: #00ff66;
+            --accent-pink: #ff0055;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --glow-cyan: rgba(0, 229, 255, 0.25);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: background 0.3s; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; padding: 2rem 1rem; display: flex; flex-direction: column; justify-content: space-between; }
+
+        .container { max-width: 750px; margin: 0 auto; width: 100%; }
+
+        header { text-align: center; margin-bottom: 2.5rem; }
+        header h1 { font-family: 'Rajdhani', sans-serif; font-size: 2.5rem; color: #fff; margin-bottom: 0.3rem; }
+        header h1 span { color: var(--accent-cyan); }
+        header p { color: var(--text-muted); font-size: 0.95rem; }
+
+        .sound-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        
+        .sound-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; justify-content: space-between; }
+        
+        .sound-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+        .sound-title { font-size: 1.1rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 0.5rem; }
+        
+        .btn-toggle { background: #07090e; border: 1px solid var(--border-color); color: var(--text-muted); padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem; }
+        .btn-toggle.playing { background: var(--accent-cyan); color: #000; border-color: var(--accent-cyan); box-shadow: 0 0 12px var(--glow-cyan); }
+
+        .volume-container { display: flex; align-items: center; gap: 1rem; }
+        .volume-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .slider { flex: 1; -webkit-appearance: none; appearance: none; height: 6px; border-radius: 3px; background: #07090e; outline: none; border: 1px solid var(--border-color); }
+        .slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent-cyan); cursor: pointer; box-shadow: 0 0 8px var(--accent-cyan); }
+
+        .master-controls { display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem; }
+        .btn-action { background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); padding: 0.7rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
+        .btn-action:hover { border-color: var(--accent-cyan); color: #fff; }
+
+        .back-link { display: block; text-align: center; margin-top: 2rem; color: var(--text-muted); text-decoration: none; font-size: 0.85rem; }
+        .back-link:hover { color: var(--accent-cyan); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Focus Soundboard <span>& Ambient Beats</span></h1>
+            <p>Built-in Web Audio synthesis for uninterrupted coding focus</p>
+        </header>
+
+        <div class="sound-grid">
+            <!-- Sound 1: Rain Generator -->
+            <div class="sound-card">
+                <div class="sound-header">
+                    <div class="sound-title">🌧️ Cyberpunk Rain</div>
+                    <button class="btn-toggle" id="btn-rain" onclick="toggleGenerator('rain')">▶ Play</button>
+                </div>
+                <div class="volume-container">
+                    <span class="volume-label">Vol</span>
+                    <input type="range" min="0" max="1" step="0.05" value="0.5" class="slider" id="vol-rain" oninput="changeVol('rain', this.value)">
+                </div>
+            </div>
+
+            <!-- Sound 2: Keyboard Clicks Generator -->
+            <div class="sound-card">
+                <div class="sound-header">
+                    <div class="sound-title">⌨️ Mechanical Clicks</div>
+                    <button class="btn-toggle" id="btn-keyboard" onclick="toggleGenerator('keyboard')">▶ Play</button>
+                </div>
+                <div class="volume-container">
+                    <span class="volume-label">Vol</span>
+                    <input type="range" min="0" max="1" step="0.05" value="0.5" class="slider" id="vol-keyboard" oninput="changeVol('keyboard', this.value)">
+                </div>
+            </div>
+
+            <!-- Sound 3: Lo-Fi Ambient Drone -->
+            <div class="sound-card">
+                <div class="sound-header">
+                    <div class="sound-title">☕ Lofi Ambient Drone</div>
+                    <button class="btn-toggle" id="btn-cafe" onclick="toggleGenerator('cafe')">▶ Play</button>
+                </div>
+                <div class="volume-container">
+                    <span class="volume-label">Vol</span>
+                    <input type="range" min="0" max="1" step="0.05" value="0.5" class="slider" id="vol-cafe" oninput="changeVol('cafe', this.value)">
+                </div>
+            </div>
+
+            <!-- Sound 4: Night Wind / Fire -->
+            <div class="sound-card">
+                <div class="sound-header">
+                    <div class="sound-title">🔥 Deep Focus Wave</div>
+                    <button class="btn-toggle" id="btn-fire" onclick="toggleGenerator('fire')">▶ Play</button>
+                </div>
+                <div class="volume-container">
+                    <span class="volume-label">Vol</span>
+                    <input type="range" min="0" max="1" step="0.05" value="0.5" class="slider" id="vol-fire" oninput="changeVol('fire', this.value)">
+                </div>
+            </div>
+        </div>
+
+        <div class="master-controls">
+            <button class="btn-action" onclick="stopAll()">⏹ Stop All Sounds</button>
+        </div>
+
+        <a href="index.html" class="back-link">← Return to Main Portfolio</a>
+    </div>
+
+    <script>
+        let audioCtx = null;
+        const activeNodes = {};
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function toggleGenerator(type) {
+            initAudioContext();
+            const btn = document.getElementById(`btn-${type}`);
+
+            if (activeNodes[type]) {
+                // Properly stop and cleanup the active audio nodes
+                try {
+                    activeNodes[type].source.stop();
+                    activeNodes[type].source.disconnect();
+                    activeNodes[type].gain.disconnect();
+                } catch (e) {
+                    console.log(e);
+                }
+                delete activeNodes[type];
+                
+                btn.classList.remove('playing');
+                btn.innerHTML = '▶ Play';
+            } else {
+                // Start sound and save reference
+                const sliderVal = document.getElementById(`vol-${type}`).value;
+                const nodeData = createSoundNode(type, sliderVal);
+                if (nodeData) {
+                    activeNodes[type] = nodeData;
+                    btn.classList.add('playing');
+                    btn.innerHTML = '⏸ Pause';
+                }
+            }
+        }
+
+        function createSoundNode(type, volume) {
+            const bufferSize = 2 * audioCtx.sampleRate;
+            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+
+            for (let i = 0; i < bufferSize; i++) {
+                if (type === 'rain') {
+                    output[i] = Math.random() * 2 - 1;
+                } else if (type === 'keyboard') {
+                    output[i] = (Math.random() > 0.98) ? (Math.random() * 2 - 1) * 0.8 : 0;
+                } else if (type === 'cafe') {
+                    output[i] = (Math.random() * 2 - 1) * 0.3;
+                } else {
+                    output[i] = (Math.random() * 2 - 1) * 0.5;
+                }
+            }
+
+            const whiteNoise = audioCtx.createBufferSource();
+            whiteNoise.buffer = noiseBuffer;
+            whiteNoise.loop = true;
+
+            const filter = audioCtx.createBiquadFilter();
+            if (type === 'rain') {
+                filter.type = 'lowpass';
+                filter.frequency.value = 1000;
+            } else if (type === 'keyboard') {
+                filter.type = 'bandpass';
+                filter.frequency.value = 2500;
+            } else if (type === 'cafe') {
+                filter.type = 'lowpass';
+                filter.frequency.value = 400;
+            } else {
+                filter.type = 'lowpass';
+                filter.frequency.value = 200;
+            }
+
+            const gainNode = audioCtx.createGain();
+            gainNode.gain.setValueAtTime(parseFloat(volume), audioCtx.currentTime);
+
+            whiteNoise.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            whiteNoise.start();
+            return { source: whiteNoise, gain: gainNode };
+        }
+
+        function changeVol(type, val) {
+            if (activeNodes[type] && activeNodes[type].gain) {
+                activeNodes[type].gain.gain.setValueAtTime(parseFloat(val), audioCtx.currentTime);
+            }
+        }
+
+        function stopAll() {
+            Object.keys(activeNodes).forEach(type => {
+                try {
+                    activeNodes[type].source.stop();
+                    activeNodes[type].source.disconnect();
+                    activeNodes[type].gain.disconnect();
+                } catch (e) {
+                    console.log(e);
+                }
+                delete activeNodes[type];
+                const btn = document.getElementById(`btn-${type}`);
+                btn.classList.remove('playing');
+                btn.innerHTML = '▶ Play';
+            });
+        }
+    </script>
+</body>
+</html>
