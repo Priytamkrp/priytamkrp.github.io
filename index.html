@@ -3,43 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Priytam Kumar | Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Priytam Kumar | Professional Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
         }
         body {
-            background-color: #0f172a;
+            background-color: #0b0f19;
             color: #f8fafc;
-            line-height: 1.6;
-            padding-bottom: 40px;
+            line-height: 1.7;
         }
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            border-bottom: 1px solid #1e293b;
+            z-index: 1000;
+        }
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #38bdf8;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #38bdf8;
+        }
+        /* Header Hero Section */
         header {
-            min-height: 65vh;
+            min-height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 2rem;
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border-bottom: 1px solid #334155;
+            padding: 8rem 2rem 4rem 2rem;
+            background: radial-gradient(circle at center, #1e293b 0%, #0b0f19 70%);
+            border-bottom: 1px solid #1e293b;
         }
         .profile-img-container {
-            width: 140px;
-            height: 140px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
             margin-bottom: 1.5rem;
-            border: 3px solid #38bdf8;
+            border: 4px solid #38bdf8;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: #1e293b;
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
         }
         .profile-img-container img {
             width: 100%;
@@ -47,83 +85,104 @@
             object-fit: cover;
         }
         .avatar-initials {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 700;
             color: #38bdf8;
         }
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 0.5rem;
             color: #f8fafc;
         }
         .tagline {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #38bdf8;
             margin-bottom: 1rem;
             font-weight: 500;
         }
+        .hero-desc {
+            max-width: 600px;
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        /* Main Container */
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 2rem 1.5rem;
+            padding: 3rem 1.5rem;
         }
         section {
-            background: #1e293b;
-            padding: 1.8rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            border: 1px solid #334155;
+            background: #111827;
+            padding: 2.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid #1f2937;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
         h2 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: #38bdf8;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid #334155;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #1f2937;
             padding-bottom: 0.5rem;
         }
         p, li {
             color: #cbd5e1;
-            font-size: 1rem;
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
         }
-        ul {
-            list-style: none;
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
         }
-        .skills-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-        .skill-tag {
-            background: #0f172a;
+        .skill-box {
+            background: #0b0f19;
+            padding: 1rem 1.2rem;
+            border-radius: 10px;
+            border: 1px solid #1f2937;
+            font-weight: 500;
             color: #38bdf8;
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            border: 1px solid #334155;
+            text-align: center;
+        }
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
         }
         .project-card {
-            background: #0f172a;
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            margin-bottom: 1rem;
+            background: #0b0f19;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #1f2937;
+            transition: all 0.3s ease;
+        }
+        .project-card:hover {
+            border-color: #38bdf8;
+            transform: translateY(-5px);
         }
         .project-card h3 {
             color: #38bdf8;
-            font-size: 1.1rem;
-            margin-bottom: 0.3rem;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
         }
+        /* Buttons */
         .btn-group {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
         .btn {
             display: inline-block;
             background: #38bdf8;
-            color: #0f172a;
-            padding: 0.6rem 1.2rem;
+            color: #0b0f19;
+            padding: 0.7rem 1.5rem;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
@@ -140,76 +199,141 @@
         .btn-insta:hover {
             background: #c13584;
         }
+        /* Contact Form */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 0.9rem;
+            background: #0b0f19;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+        }
+        input:focus, textarea:focus {
+            border-color: #38bdf8;
+            outline: none;
+        }
         footer {
             text-align: center;
-            padding: 1.5rem;
+            padding: 2rem;
             color: #64748b;
-            font-size: 0.85rem;
-            border-top: 1px solid #1e293b;
-            margin-top: 2rem;
+            font-size: 0.9rem;
+            border-top: 1px solid #1f2937;
+            margin-top: 3rem;
+            background: #0b0f19;
+        }
+        @media(max-width: 768px) {
+            .nav-links { display: none; }
+            h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <!-- Profile Picture: Ensure you upload your photo named 'photo.jpg' to GitHub repository -->
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="#" class="nav-logo">Priytam.dev</a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header Hero Section -->
+    <header id="home">
         <div class="profile-img-container">
             <img src="photo.jpg" alt="Priytam Kumar" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
             <div class="avatar-initials" style="display:none;">PK</div>
         </div>
         <h1>Priytam Kumar</h1>
-        <div class="tagline">Computer Science Engineering Student</div>
-        <p>Government Polytechnic, Dumka (1st Year)</p>
+        <div class="tagline">Computer Science Engineering Student & Creator</div>
+        <p class="hero-desc">Passionate about coding, web technologies, video editing, and building engaging digital content from Dumka, Jharkhand.</p>
+        <div class="btn-group">
+            <a href="#projects" class="btn">View Projects</a>
+            <a href="#contact" class="btn btn-insta" style="background:#38bdf8; color:#0b0f19;">Let's Connect</a>
+        </div>
     </header>
 
     <div class="container">
+        <!-- About Section -->
         <section id="about">
             <h2>About Me</h2>
-            <p>Namaste! Main Priytam Kumar hoon, Government Polytechnic Dumka se Computer Science Engineering ka 1st year student. Mujhe tech, programming aur digital content creation (Video Editing, YouTube & Instagram) me kafi interest hai. Main aage chalkar tech aur web technologies me apna career banana chahta hoon.</p>
+            <p>Namaste! Main Priytam Kumar hoon, Government Polytechnic Dumka se Computer Science Engineering ka 1st-year student hoon. Main technology, programming, aur digital creation (jaise video editing aur social media content management) me deep interest rakhta hoon.</p>
+            <p>Mera aim ek skilled Software Developer aur Web Creator banne ka hai, jo modern tools aur creative ideas ka use karke unique solutions build kar sake.</p>
         </section>
 
+        <!-- Education Section -->
         <section id="education">
-            <h2>Education</h2>
-            <p><strong>Diploma in Computer Science & Engineering</strong></p>
-            <p>Government Polytechnic, Dumka — 1st Year (Pursuing)</p>
+            <h2>Education & Background</h2>
+            <p><strong>🎓 Diploma in Computer Science & Engineering</strong></p>
+            <p>Government Polytechnic, Dumka — 1st Year (2026 - Present)</p>
+            <p style="margin-top: 1rem; color: #94a3b8;">Completed schooling with strong foundational basics and active participation in technical and digital media projects.</p>
         </section>
 
+        <!-- Skills Section -->
         <section id="skills">
-            <h2>Skills & Interests</h2>
-            <div class="skills-list">
-                <span class="skill-tag">Computer Science Fundamentals</span>
-                <span class="skill-tag">Programming Basics</span>
-                <span class="skill-tag">Web Development (HTML/CSS)</span>
-                <span class="skill-tag">Video Editing (CapCut / VN)</span>
-                <span class="skill-tag">Content Creation</span>
+            <h2>Technical & Creative Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-box">💻 Computer Science Basics</div>
+                <div class="skill-box">🌐 HTML5 & CSS3 Web Dev</div>
+                <div class="skill-box">⚡ Problem Solving & Logic</div>
+                <div class="skill-box">🎬 Video Editing (CapCut/VN)</div>
+                <div class="skill-box">📱 Content Creation & Reels</div>
+                <div class="skill-box">🚀 GitHub & Deployment</div>
             </div>
         </section>
 
+        <!-- Projects Section -->
         <section id="projects">
-            <h2>Projects & Works</h2>
-            <div class="project-card">
-                <h3>Student Portfolio Website</h3>
-                <p>A modern, responsive personal portfolio website built with HTML and CSS, hosted live on GitHub Pages.</p>
-            </div>
-            <div class="project-card">
-                <h3>Digital Content & Gameplay Streams</h3>
-                <p>Managing college lifestyle vlogs and gaming streams like Carrom Pool along with creative short-form video editing.</p>
+            <h2>Featured Projects & Works</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>🚀 Student Portfolio Website</h3>
+                    <p>A fully responsive, custom-coded modern personal portfolio web app built using advanced HTML5 and CSS3, hosted live on GitHub Pages.</p>
+                </div>
+                <div class="project-card">
+                    <h3>🎬 Video Editing & Reels Portfolio</h3>
+                    <p>Professional short-form content creation using mobile editing workflows, transparency masks, overlays, and catchy viral hooks for Instagram.</p>
+                </div>
+                <div class="project-card">
+                    <h3>🎮 Gaming Streams & Vlogs</h3>
+                    <p>Managing college lifestyle vlogging content for Government Polytechnic Dumka and broadcasting live Carrom Pool gameplay sessions.</p>
+                </div>
             </div>
         </section>
 
+        <!-- Contact Section -->
         <section id="contact">
-            <h2>Connect With Me</h2>
-            <p>Agar aap mujhse connect karna chahte hain, toh aap mujhe email ya Instagram par message kar sakte hain:</p>
-            <div class="btn-group">
+            <h2>Get In Touch</h2>
+            <p>Agar aap mujhse kisi project, study discussion, ya collaboration ke liye connect karna chahte hain, toh aap seedhe message bhej sakte hain:</p>
+            
+            <form action="mailto:priytamk45@gmail.com" method="POST" enctype="text/plain">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+                <button type="submit" class="btn" style="border:none; cursor:pointer;">Send Message</button>
+            </form>
+
+            <div class="btn-group" style="margin-top: 2rem;">
                 <a href="mailto:priytamk45@gmail.com" class="btn">Email Me</a>
                 <a href="https://instagram.com/pirtuu_621" target="_blank" class="btn btn-insta">Instagram (@pirtuu_621)</a>
             </div>
         </section>
     </div>
 
+    <!-- Footer -->
     <footer>
-        Powered by Priytam Kumar
+        <p>© 2026 Priytam Kumar. All Rights Reserved.</p>
+        <p style="margin-top: 0.3rem; font-size: 0.8rem;">Powered by Priytam Kumar</p>
     </footer>
 
 </body>
