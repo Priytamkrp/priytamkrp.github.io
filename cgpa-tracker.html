@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA & Attendance Suite | Priytam.dev</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #07090e;
+            --card-bg: rgba(18, 24, 38, 0.85);
+            --accent-cyan: #00e5ff;
+            --accent-green: #00ff66;
+            --accent-pink: #ff0055;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --glow-cyan: rgba(0, 229, 255, 0.25);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: background 0.3s; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; padding: 2rem 1rem; display: flex; flex-direction: column; justify-content: space-between; }
+
+        .container { max-width: 700px; margin: 0 auto; width: 100%; }
+
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { font-family: 'Rajdhani', sans-serif; font-size: 2.3rem; color: #fff; margin-bottom: 0.3rem; }
+        header h1 span { color: var(--accent-cyan); }
+        header p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Navigation tabs between CGPA and Attendance */
+        .suite-tabs { display: flex; gap: 0.8rem; margin-bottom: 1.5rem; justify-content: center; }
+        .suite-tab { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-muted); padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; }
+        .suite-tab.active { background: var(--accent-cyan); color: #000; border-color: var(--accent-cyan); box-shadow: 0 0 15px var(--glow-cyan); }
+
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; }
+        .card.active { display: block; }
+
+        h2 { font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; color: #fff; margin-bottom: 1.2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+
+        .input-group { margin-bottom: 1.2rem; text-align: left; }
+        .input-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 500; }
+        .input-field { width: 100%; padding: 0.8rem 1rem; background: #07090e; border: 1px solid var(--border-color); border-radius: 8px; color: #fff; font-size: 0.95rem; outline: none; }
+        .input-field:focus { border-color: var(--accent-cyan); box-shadow: 0 0 10px var(--glow-cyan); }
+
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        .btn { width: 100%; padding: 0.8rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; border: none; transition: 0.2s; margin-top: 0.5rem; }
+        .btn-primary { background: var(--accent-cyan); color: #000; box-shadow: 0 0 15px var(--glow-cyan); }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .result-box { margin-top: 1.5rem; background: #07090e; border: 1px solid var(--border-color); padding: 1.2rem; border-radius: 10px; text-align: center; font-size: 1.1rem; }
+        .result-box span { color: var(--accent-cyan); font-family: 'Rajdhani', sans-serif; font-size: 1.6rem; font-weight: 700; }
+
+        .back-link { display: block; text-align: center; margin-top: 2rem; color: var(--text-muted); text-decoration: none; font-size: 0.85rem; }
+        .back-link:hover { color: var(--accent-cyan); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>CGPA & Attendance <span>Suite</span></h1>
+            <p>Smart academic calculator tools for Polytechnic & Engineering students</p>
+        </header>
+
+        <!-- Switch Tabs -->
+        <div class="suite-tabs">
+            <button class="suite-tab active" onclick="switchTab('cgpa', event)">📊 SGPA / CGPA Calculator</button>
+            <button class="suite-tab" onclick="switchTab('attendance', event)">📅 75% Attendance Tracker</button>
+        </div>
+
+        <!-- CGPA Card -->
+        <div class="card active" id="cgpaCard">
+            <h2>Calculate Semester SGPA</h2>
+            <div class="input-group">
+                <label for="totalSubjects">Total Number of Subjects:</label>
+                <input type="number" class="input-field" id="totalSubjects" value="5" min="1" max="10">
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Note: Grade points map out of 10 (e.g., O=10, A+=9, A=8, B+=7, etc.)</p>
+            
+            <div id="subjectInputs">
+                <!-- Dynamic subject rows will load here -->
+            </div>
+
+            <button class="btn btn-primary" onclick="calculateSGPA()">Calculate SGPA</button>
+
+            <div class="result-box" id="cgpaResult" style="display: none;">
+                Your Calculated SGPA: <span id="sgpaOutput">0.00</span>
+            </div>
+        </div>
+
+        <!-- Attendance Card -->
+        <div class="card" id="attendanceCard">
+            <h2>75% Attendance Requirement Checker</h2>
+            <div class="row">
+                <div class="input-group">
+                    <label for="totalClasses">Classes Held So Far:</label>
+                    <input type="number" class="input-field" id="totalClasses" placeholder="e.g. 100">
+                </div>
+                <div class="input-group">
+                    <label for="attendedClasses">Classes Attended:</label>
+                    <input type="number" class="input-field" id="attendedClasses" placeholder="e.g. 70">
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="calculateAttendance()">Check Attendance Status</button>
+
+            <div class="result-box" id="attendanceResult" style="display: none;">
+                Current Attendance: <span id="attPercentage">0%</span><br>
+                <span id="attStatus" style="font-size: 1rem; display: block; margin-top: 0.5rem;"></span>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-link">← Return to Main Portfolio</a>
+    </div>
+
+    <script>
+        // Tab Switcher
+        function switchTab(tabName, event) {
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.suite-tab').forEach(t => t.classList.remove('active'));
+
+            if (tabName === 'cgpa') {
+                document.getElementById('cgpaCard').classList.add('active');
+            } else {
+                document.getElementById('attendanceCard').classList.add('active');
+            }
+            event.target.classList.add('active');
+        }
+
+        // Dynamic CGPA inputs generator
+        function generateSubjectInputs() {
+            const count = parseInt(document.getElementById('totalSubjects').value) || 0;
+            const container = document.getElementById('subjectInputs');
+            container.innerHTML = '';
+
+            for (let i = 1; i <= count; i++) {
+                container.innerHTML += `
+                    <div class="row" style="margin-bottom: 0.8rem;">
+                        <div class="input-group" style="margin-bottom:0;">
+                            <label>Sub ${i} Credit</label>
+                            <input type="number" class="input-field credit" value="3" min="1" max="6">
+                        </div>
+                        <div class="input-group" style="margin-bottom:0;">
+                            <label>Sub ${i} Grade Point (0-10)</label>
+                            <input type="number" class="input-field grade" value="8" min="0" max="10" step="0.5">
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        document.getElementById('totalSubjects').addEventListener('input', generateSubjectInputs);
+        window.onload = generateSubjectInputs;
+
+        function calculateSGPA() {
+            const credits = document.querySelectorAll('.credit');
+            const grades = document.querySelectorAll('.grade');
+            
+            let totalCreditPoints = 0;
+            let totalCredits = 0;
+
+            for (let i = 0; i < credits.length; i++) {
+                const credit = parseFloat(credits[i].value) || 0;
+                const grade = parseFloat(grades[i].value) || 0;
+
+                totalCreditPoints += (credit * grade);
+                totalCredits += credit;
+            }
+
+            if (totalCredits === 0) {
+                alert('Please enter valid credits.');
+                return;
+            }
+
+            const sgpa = (totalCreditPoints / totalCredits).toFixed(2);
+            document.getElementById('sgpaOutput').innerText = sgpa;
+            document.getElementById('cgpaResult').style.display = 'block';
+        }
+
+        // Attendance Calculator
+        function calculateAttendance() {
+            const total = parseInt(document.getElementById('totalClasses').value);
+            const attended = parseInt(document.getElementById('attendedClasses').value);
+            const resultBox = document.getElementById('attendanceResult');
+            const attPercentage = document.getElementById('attPercentage');
+            const attStatus = document.getElementById('attStatus');
+
+            if (isNaN(total) || isNaN(attended) || total <= 0 || attended < 0 || attended > total) {
+                alert('Please enter valid class numbers.');
+                return;
+            }
+
+            const percentage = ((attended / total) * 100).toFixed(2);
+            attPercentage.innerText = percentage + '%';
+            resultBox.style.display = 'block';
+
+            if (percentage >= 75) {
+                attStatus.style.color = 'var(--accent-green)';
+                attStatus.innerText = '🎉 Great! Your attendance is safe (Above 75%).';
+            } else {
+                attStatus.style.color = 'var(--accent-pink)';
+                const required = Math.ceil((0.75 * total - attended) / 0.25);
+                attStatus.innerText = `⚠️ Low Attendance! You need to attend next ${required} classes consecutively to reach 75%.`;
+            }
+        }
+    </script>
+</body>
+</html>
