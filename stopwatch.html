@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch | Priytam Kumar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: #0b0f19;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        .stopwatch-container {
+            background: #111827;
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid #1f2937;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+        }
+        .title {
+            font-size: 1.2rem;
+            color: #38bdf8;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+        .subtitle {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+        }
+        .time-display {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #f8fafc;
+            background: #0b0f19;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        button {
+            padding: 0.8rem 0;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-start {
+            background: #22c55e;
+            color: #fff;
+        }
+        .btn-start:hover {
+            opacity: 0.9;
+        }
+        .btn-stop {
+            background: #ef4444;
+            color: #fff;
+        }
+        .btn-stop:hover {
+            opacity: 0.9;
+        }
+        .btn-reset {
+            background: #64748b;
+            color: #fff;
+        }
+        .btn-reset:hover {
+            opacity: 0.9;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .back-link:hover {
+            color: #38bdf8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stopwatch-container">
+        <div class="title">⏱️ Stopwatch</div>
+        <div class="subtitle">Designed by Priytam</div>
+        
+        <div class="time-display" id="display">00:00:00</div>
+
+        <div class="controls">
+            <button class="btn-start" onclick="startTimer()">Start</button>
+            <button class="btn-stop" onclick="stopTimer()">Stop</button>
+            <button class="btn-reset" onclick="resetTimer()">Reset</button>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+    </div>
+
+    <script>
+        let startTime = 0;
+        let elapsedTime = 0;
+        let timerInterval;
+        let isRunning = false;
+
+        const display = document.getElementById('display');
+
+        function formatTime(ms) {
+            let totalSeconds = Math.floor(ms / 1000);
+            let hours = Math.floor(totalSeconds / 3600);
+            let minutes = Math.floor((totalSeconds % 3600) / 60);
+            let seconds = totalSeconds % 60;
+            let milliseconds = Math.floor((ms % 1000) / 10);
+
+            return (
+                String(hours).padStart(2, '0') + ":" +
+                String(minutes).padStart(2, '0') + ":" +
+                String(seconds).padStart(2, '0')
+            );
+        }
+
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                startTime = Date.now() - elapsedTime;
+                timerInterval = setInterval(() => {
+                    elapsedTime = Date.now() - startTime;
+                    display.textContent = formatTime(elapsedTime);
+                }, 10);
+            }
+        }
+
+        function stopTimer() {
+            if (isRunning) {
+                isRunning = false;
+                clearInterval(timerInterval);
+            }
+        }
+
+        function resetTimer() {
+            isRunning = false;
+            clearInterval(timerInterval);
+            elapsedTime = 0;
+            display.textContent = "00:00:00";
+        }
+    </script>
+
+</body>
+</html>
