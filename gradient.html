@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Gradient Generator | Designed by Priytam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --accent-color: #38bdf8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .tool-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            color: var(--accent-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Gradient Preview Box */
+        .preview-box {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            transition: background 0.5s ease;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            justify-content: center;
+        }
+
+        .color-picker-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        input[type="color"] {
+            -webkit-appearance: none;
+            border: none;
+            width: 60px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            background: none;
+        }
+
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        input[type="color"]::-webkit-color-swatch {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .direction-select {
+            background: #1f2937;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            outline: none;
+            width: 100%;
+            margin-bottom: 1.2rem;
+        }
+
+        /* CSS Code Box */
+        .code-box {
+            background: #1f2937;
+            border: 1px solid var(--border-color);
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            word-break: break-all;
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.7rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: #0b0f19;
+        }
+
+        .btn-secondary {
+            background: #374151;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .toast {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #22c55e;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .branding {
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tool-container">
+        <h1>🎨 CSS Gradient Generator</h1>
+        <p class="subtitle">Create and copy custom CSS background gradients</p>
+
+        <!-- Preview Box -->
+        <div class="preview-box" id="previewBox"></div>
+
+        <!-- Color Pickers -->
+        <div class="controls">
+            <div class="color-picker-group">
+                <label>Color 1</label>
+                <input type="color" id="color1" value="#38bdf8" oninput="updateGradient()">
+            </div>
+            <div class="color-picker-group">
+                <label>Color 2</label>
+                <input type="color" id="color2" value="#0f172a" oninput="updateGradient()">
+            </div>
+        </div>
+
+        <!-- Direction Dropdown -->
+        <select class="direction-select" id="direction" onchange="updateGradient()">
+            <option value="to right">To Right ➔</option>
+            <option value="to left">To Left ⬅</option>
+            <option value="to bottom">To Bottom ⬇</option>
+            <option value="to top">To Top ⬆</option>
+            <option value="to bottom right">To Bottom Right ↘</option>
+        </select>
+
+        <!-- CSS Code Display -->
+        <div class="code-box" id="codeText">background: linear-gradient(to right, #38bdf8, #0f172a);</div>
+
+        <!-- Buttons -->
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="randomGradient()">🎲 Random</button>
+            <button class="btn btn-primary" onclick="copyCSS()">📋 Copy CSS</button>
+        </div>
+
+        <div class="toast" id="toastMsg">CSS Copied to Clipboard! ✨</div>
+        <div class="branding">Designed by Priytam</div>
+    </div>
+
+    <script>
+        const previewBox = document.getElementById('previewBox');
+        const color1 = document.getElementById('color1');
+        const color2 = document.getElementById('color2');
+        const direction = document.getElementById('direction');
+        const codeText = document.getElementById('codeText');
+        const toastMsg = document.getElementById('toastMsg');
+
+        function updateGradient() {
+            const gradientCSS = `linear-gradient(${direction.value}, ${color1.value}, ${color2.value})`;
+            previewBox.style.background = gradientCSS;
+            codeText.innerText = `background: ${gradientCSS};`;
+        }
+
+        function randomGradient() {
+            color1.value = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+            color2.value = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+            updateGradient();
+        }
+
+        function copyCSS() {
+            navigator.clipboard.writeText(codeText.innerText);
+            toastMsg.style.opacity = '1';
+            setTimeout(() => {
+                toastMsg.style.opacity = '0';
+            }, 2000);
+        }
+
+        // Initialize on load
+        updateGradient();
+    </script>
+</body>
+</html>
