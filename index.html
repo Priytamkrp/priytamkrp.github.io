@@ -1064,7 +1064,190 @@
         }
     });
 </script>
+<!-- Feedback Modal & Floating Button Code -->
+<button class="floating-feedback-btn" onclick="toggleFeedbackModal()" title="Send Feedback">
+    💬 Feedback
+</button>
 
+<div id="feedbackModal" class="feedback-modal-overlay" onclick="closeFeedbackOutside(event)">
+    <div class="feedback-modal-box">
+        <div class="modal-header">
+            <h3>Quick Feedback / Message</h3>
+            <span class="close-modal" onclick="toggleFeedbackModal()">&times;</span>
+        </div>
+        <p class="modal-subtext">कोई सुझाव या मैसेज हो तो यहाँ लिखें!</p>
+        
+        <form id="quickFeedbackForm" action="https://formspree.io/f/mdegopke" method="POST">
+            <input type="text" name="name" placeholder="आपका नाम (Your Name)" required>
+            <input type="email" name="email" placeholder="आपका ईमेल (Optional)">
+            <textarea name="message" rows="3" placeholder="अपना मैसेज या फीडबैक लिखें..." required></textarea>
+            <button type="submit" id="feedbackSubmitBtn" class="modal-submit-btn">Send Message 🚀</button>
+        </form>
+        <p id="feedbackStatus" class="feedback-status"></p>
+    </div>
+</div>
+
+<style>
+    .floating-feedback-btn {
+        position: fixed;
+        bottom: 22px;
+        right: 22px;
+        background: #2563eb;
+        color: #ffffff;
+        border: none;
+        padding: 12px 18px;
+        border-radius: 50px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+        z-index: 999;
+        transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .floating-feedback-btn:hover {
+        background: #1d4ed8;
+        transform: translateY(-3px);
+    }
+    .feedback-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+    }
+    .feedback-modal-box {
+        background: #ffffff;
+        width: 100%;
+        max-width: 380px;
+        border-radius: 16px;
+        padding: 22px;
+        border: 1px solid #dbeafe;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        animation: popIn 0.25s ease-out;
+    }
+    @keyframes popIn {
+        from { transform: scale(0.9); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #eff6ff;
+        padding-bottom: 10px;
+        margin-bottom: 8px;
+    }
+    .modal-header h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        color: #1e3a8a;
+    }
+    .close-modal {
+        font-size: 1.5rem;
+        color: #64748b;
+        cursor: pointer;
+        line-height: 1;
+    }
+    .modal-subtext {
+        font-size: 0.85rem;
+        color: #475569;
+        margin-bottom: 14px;
+    }
+    #quickFeedbackForm input,
+    #quickFeedbackForm textarea {
+        width: 100%;
+        padding: 10px 12px;
+        margin-bottom: 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        box-sizing: border-box;
+        outline: none;
+    }
+    #quickFeedbackForm input:focus,
+    #quickFeedbackForm textarea:focus {
+        border-color: #2563eb;
+    }
+    .modal-submit-btn {
+        width: 100%;
+        background: #2563eb;
+        color: #fff;
+        border: none;
+        padding: 11px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+    }
+    .modal-submit-btn:hover {
+        background: #1d4ed8;
+    }
+    .feedback-status {
+        margin-top: 10px;
+        font-size: 0.85rem;
+        text-align: center;
+        font-weight: 500;
+    }
+</style>
+
+<script>
+    function toggleFeedbackModal() {
+        const modal = document.getElementById("feedbackModal");
+        modal.style.display = (modal.style.display === "flex") ? "none" : "flex";
+    }
+
+    function closeFeedbackOutside(e) {
+        if (e.target.id === "feedbackModal") {
+            toggleFeedbackModal();
+        }
+    }
+
+    const feedbackForm = document.getElementById("quickFeedbackForm");
+    if (feedbackForm) {
+        feedbackForm.addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const status = document.getElementById("feedbackStatus");
+            const btn = document.getElementById("feedbackSubmitBtn");
+            
+            btn.innerText = "Sending...";
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(feedbackForm.action, {
+                    method: "POST",
+                    body: new FormData(feedbackForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    status.style.color = "#16a34a";
+                    status.innerText = "✅ Shukriya! Aapka message mil gaya hai.";
+                    feedbackForm.reset();
+                    setTimeout(() => {
+                        toggleFeedbackModal();
+                        status.innerText = "";
+                    }, 1800);
+                } else {
+                    throw new Error("Form error");
+                }
+            } catch (error) {
+                status.style.color = "#dc2626";
+                status.innerText = "❌ Kuch dikkat aayi, dobara try karein.";
+            } finally {
+                btn.innerText = "Send Message 🚀";
+                btn.disabled = false;
+            }
+        });
+    }
+</script>
+    
 
 </body>
 </html>
