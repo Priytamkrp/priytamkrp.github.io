@@ -44,6 +44,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.7;
+            padding-top: 65px; /* Fixed navbar overlap fix */
         }
         /* Navbar */
         nav {
@@ -51,12 +52,13 @@
             top: 0;
             left: 0;
             width: 100%;
+            height: 65px;
             background: var(--nav-bg);
             backdrop-filter: blur(10px);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.8rem 5%;
+            padding: 0 5%;
             border-bottom: 1px solid var(--border-color);
             z-index: 1000;
         }
@@ -65,6 +67,9 @@
             font-size: 1.05rem;
             color: var(--accent-color);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
         }
         .nav-right {
             display: flex;
@@ -90,11 +95,11 @@
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             color: var(--accent-color);
-            padding: 0.3rem 0.7rem;
+            padding: 0.35rem 0.75rem;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
         .theme-toggle:hover {
             background: var(--accent-color);
@@ -102,13 +107,13 @@
         }
         /* Header Hero Section */
         header {
-            min-height: 80vh;
+            min-height: 75vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 6rem 1.2rem 3rem 1.2rem;
+            padding: 3rem 1.2rem;
             background: radial-gradient(circle at center, var(--card-bg) 0%, var(--bg-color) 70%);
             border-bottom: 1px solid var(--border-color);
         }
@@ -124,6 +129,7 @@
             justify-content: center;
             background-color: var(--card-bg);
             box-shadow: 0 0 20px rgba(2, 132, 199, 0.2);
+            flex-shrink: 0;
         }
         .profile-img-container img {
             width: 100%;
@@ -262,6 +268,15 @@
             border-color: var(--accent-color);
             transform: translateY(-3px);
         }
+        .project-tag {
+            font-size: 0.65rem;
+            color: var(--accent-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 3px;
+        }
         .project-card h3, .cert-card h3 {
             color: var(--accent-color);
             font-size: 1.1rem;
@@ -278,7 +293,7 @@
             flex-wrap: wrap;
         }
         .btn-sm {
-            padding: 0.45rem 0.9rem;
+            padding: 0.5rem 0.9rem;
             font-size: 0.85rem;
             border-radius: 6px;
             text-decoration: none;
@@ -297,9 +312,11 @@
         }
         .btn-group {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 0.8rem;
-            margin-top: 1.2rem;
+            margin-top: 1rem;
+            width: 100%;
+            max-width: 550px;
         }
         .btn {
             display: block;
@@ -312,13 +329,104 @@
             font-weight: 600;
             font-size: 0.9rem;
             transition: 0.3s;
+            border: none;
+            cursor: pointer;
         }
         .btn:hover {
             opacity: 0.9;
         }
+        .btn-outline {
+            background: var(--card-bg);
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+        }
         .btn-insta { background: #e1306c; color: #fff; }
         .btn-yt { background: #ff0000; color: #fff; }
         .btn-github { background: #333333; color: #fff; }
+
+        /* Live Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            max-width: 550px;
+            width: 100%;
+            margin: 1.5rem auto 0 auto;
+        }
+        .stat-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 0.8rem 0.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+        .stat-num {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            display: block;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Digital Resume Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .resume-modal {
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            max-width: 650px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 1.8rem;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            text-align: left;
+        }
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            background: var(--inner-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .resume-header {
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        .resume-section {
+            margin-bottom: 1.2rem;
+        }
+        .resume-section h4 {
+            color: var(--accent-color);
+            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
         /* Contact Form */
         form {
@@ -351,7 +459,17 @@
         }
         @media(max-width: 768px) {
             .nav-links { display: none; }
-            h1 { font-size: 1.9rem; }
+            h1 { font-size: 1.85rem; }
+            header { padding: 2rem 1rem; min-height: auto; }
+            .btn-group { grid-template-columns: 1fr; }
+            .stats-bar { gap: 0.5rem; }
+            .stat-num { font-size: 1.15rem; }
+        }
+        @media print {
+            body * { visibility: hidden; }
+            #resumeModal, #resumeModal * { visibility: visible; }
+            #resumeModal { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; border: none; }
+            .no-print { display: none !important; }
         }
     </style>
 </head>
@@ -359,7 +477,7 @@
 
     <!-- Navigation Bar -->
     <nav>
-        <a href="#" class="nav-logo" style="display: flex; align-items: center; gap: 0.6rem; text-decoration: none;">
+        <a href="#" class="nav-logo">
             <img src="photo.jpg" alt="PK" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-color);" onerror="this.style.display='none';">
             <span style="color: var(--text-color); font-weight: 700;">Priytam Kumar</span>
         </a>
@@ -376,7 +494,6 @@
         </div>
     </nav>
 
-
     <!-- Header Hero Section -->
     <header id="home">
         <div class="profile-img-container">
@@ -386,9 +503,27 @@
         <h1>Priytam Kumar</h1>
         <div class="tagline">Computer Science Engineering Student & Creator</div>
         <p class="hero-desc">Passionate about coding, web technologies, video editing, and building engaging digital content from Dumka, Jharkhand.</p>
+        
         <div class="btn-group">
             <a href="#projects" class="btn">View Projects</a>
+            <button onclick="openResume()" class="btn btn-outline">📄 View Resume</button>
             <a href="#contact" class="btn">Let's Connect</a>
+        </div>
+
+        <!-- Auto-Updating Live Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-box">
+                <span class="stat-num" id="totalProjectsCount">22+</span>
+                <span class="stat-label">Live Projects</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-num">1st Yr</span>
+                <span class="stat-label">CSE Diploma</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-num">100%</span>
+                <span class="stat-label">Responsive</span>
+            </div>
         </div>
     </header>
 
@@ -427,7 +562,7 @@
             
             <!-- Controls: Search & Category Tabs -->
             <div class="portfolio-controls">
-                <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search apps (e.g. Calculator, Pomodoro, QR)..." onkeyup="filterProjects()">
+                <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search apps (e.g. Calculator, Pomodoro, QR, Notes)..." onkeyup="filterProjects()">
                 
                 <div class="filter-tabs">
                     <button class="filter-btn active" onclick="filterCategory('all', event)">All Apps</button>
@@ -443,7 +578,8 @@
                 <!-- Utility: Calculator -->
                 <div class="project-card" data-category="utility" data-name="smart digital calculator">
                     <div>
-                        <h3>🧮 Smart Digital Calculator</h3>
+                        <span class="project-tag">Utility App</span>
+                         <h3>🧮 Smart Digital Calculator</h3>
                         <p>Fully functional web calculator with dark theme support.</p>
                     </div>
                     <div class="project-links">
@@ -454,6 +590,7 @@
                 <!-- Utility: Stopwatch -->
                 <div class="project-card" data-category="utility" data-name="interactive stopwatch">
                     <div>
+                        <span class="project-tag">Utility App</span>
                         <h3>⏱️ Interactive Stopwatch</h3>
                         <p>Precise responsive stopwatch with lap and reset controls.</p>
                     </div>
@@ -465,6 +602,7 @@
                 <!-- Utility: To-Do List -->
                 <div class="project-card" data-category="utility" data-name="task manager to do list">
                     <div>
+                        <span class="project-tag">Productivity</span>
                         <h3>📝 Task Manager (To-Do List)</h3>
                         <p>Productive task tracker for daily college assignments.</p>
                     </div>
@@ -476,6 +614,7 @@
                 <!-- Games: Quiz -->
                 <div class="project-card" data-category="games" data-name="cs mini quiz app">
                     <div>
+                        <span class="project-tag">Quiz Game</span>
                         <h3>🧠 CS Mini Quiz App</h3>
                         <p>Interactive Computer Science quiz game with instant scoring.</p>
                     </div>
@@ -487,6 +626,7 @@
                 <!-- Games: Tic-Tac-Toe -->
                 <div class="project-card" data-category="games" data-name="tic tac toe game">
                     <div>
+                        <span class="project-tag">Classic Game</span>
                         <h3>🎮 Tic-Tac-Toe Game</h3>
                         <p>Classic 2-player zero-kata game with smooth JS animations.</p>
                     </div>
@@ -498,6 +638,7 @@
                 <!-- Utility: Gradient Generator -->
                 <div class="project-card" data-category="utility" data-name="css gradient generator">
                     <div>
+                        <span class="project-tag">Developer Tool</span>
                         <h3>🎨 CSS Gradient Generator</h3>
                         <p>Tool to generate custom CSS background gradients instantly.</p>
                     </div>
@@ -509,6 +650,7 @@
                 <!-- Utility: Password Generator -->
                 <div class="project-card" data-category="utility" data-name="password generator">
                     <div>
+                        <span class="project-tag">Security Tool</span>
                         <h3>🔐 Password Generator</h3>
                         <p>Secure tool to generate strong customized passwords.</p>
                     </div>
@@ -520,6 +662,7 @@
                 <!-- Utility: Currency Converter -->
                 <div class="project-card" data-category="utility" data-name="currency converter">
                     <div>
+                        <span class="project-tag">Finance Tool</span>
                         <h3>💱 Currency Converter</h3>
                         <p>Convert amounts smoothly across global currencies.</p>
                     </div>
@@ -531,6 +674,7 @@
                 <!-- Utility: Age Calculator -->
                 <div class="project-card" data-category="utility" data-name="age calculator">
                     <div>
+                        <span class="project-tag">Utility App</span>
                         <h3>🎂 Age Calculator</h3>
                         <p>Calculate exact age in years, months, and days easily.</p>
                     </div>
@@ -542,6 +686,7 @@
                 <!-- Utility: Telegram OTP -->
                 <div class="project-card" data-category="utility" data-name="telegram otp gateway">
                     <div>
+                        <span class="project-tag">API Integration</span>
                         <h3>🔐 Telegram OTP Gateway</h3>
                         <p>Dynamic OTP verification system via Telegram Bot API.</p>
                     </div>
@@ -553,6 +698,7 @@
                 <!-- Games: Neon Cyber Dodge -->
                 <div class="project-card" data-category="games" data-name="neon cyber dodge arcade game">
                     <div>
+                        <span class="project-tag">Arcade Game</span>
                         <h3>🎮 Neon Cyber Dodge</h3>
                         <p>Retro arcade game built with HTML5 Canvas and JS.</p>
                     </div>
@@ -560,20 +706,11 @@
                         <a href="game.html" target="_blank" class="btn-sm btn-primary">🚀 Play Game</a>
                     </div>
                 </div>
-                <!-- Academic: E-Commerce Catalog -->
-<div class="project-card" data-category="academic" data-name="ecommerce product catalog store">
-    <div>
-        <h3>🛍️ E-Commerce Catalog</h3>
-        <p>Explore tech gadgets and accessories with live search filtering.</p>
-    </div>
-    <div class="project-links">
-        <a href="ecommerce-catalog.html" target="_blank" class="btn-sm btn-primary">🚀 Launch App</a>
-    </div>
-</div>
-
+                
                 <!-- Utility: Focus Pomodoro -->
                 <div class="project-card" data-category="utility" data-name="focus pomodoro task vault">
                     <div>
+                        <span class="project-tag">Productivity Tool</span>
                         <h3>⚡ Focus Pomodoro & Task Vault</h3>
                         <p>Custom timer with high-volume alarm & task manager.</p>
                     </div>
@@ -585,6 +722,7 @@
                 <!-- Utility: Typing Speed Test -->
                 <div class="project-card" data-category="utility" data-name="typing speed accuracy test">
                     <div>
+                        <span class="project-tag">Utility App</span>
                         <h3>⌨️ Typing Speed & Accuracy Test</h3>
                         <p>Real-time WPM tester and accuracy checker.</p>
                     </div>
@@ -596,6 +734,7 @@
                 <!-- Utility: QR Code Generator -->
                 <div class="project-card" data-category="utility" data-name="qr code generator">
                     <div>
+                        <span class="project-tag">Utility App</span>
                         <h3>📱 QR Code Generator</h3>
                         <p>Instant QR creator for links and text with one-click download.</p>
                     </div>
@@ -607,6 +746,7 @@
                 <!-- Academic: CGPA Suite -->
                 <div class="project-card" data-category="academic" data-name="cgpa attendance calculator suite">
                     <div>
+                        <span class="project-tag">Academic Suite</span>
                         <h3>📊 CGPA & Attendance Suite</h3>
                         <p>Smart utility to calculate semester CGPA & 75% attendance.</p>
                     </div>
@@ -618,6 +758,7 @@
                 <!-- Utility: Focus Soundboard -->
                 <div class="project-card" data-category="utility" data-name="focus soundboard ambient beats">
                     <div>
+                        <span class="project-tag">Focus Tool</span>
                         <h3>🎧 Focus Soundboard & Beats</h3>
                         <p>Custom ambient sound mixer for deep coding concentration.</p>
                     </div>
@@ -629,6 +770,7 @@
                 <!-- Games: Cyber Neon Reflex Game -->
                 <div class="project-card" data-category="games" data-name="cyber neon reflex speed game">
                     <div>
+                        <span class="project-tag">Mini Arcade Game</span>
                         <h3>⚡ Cyber Neon Reflex</h3>
                         <p>Fast-paced reflex test arcade game with high score tracker.</p>
                     </div>
@@ -640,6 +782,7 @@
                 <!-- Academic: Smart College Notes Hub -->
                 <div class="project-card" data-category="academic" data-name="smart college notes study hub">
                     <div>
+                        <span class="project-tag">Academic Library</span>
                         <h3>📚 Smart College Notes Hub</h3>
                         <p>Access and upload semester notes, syllabus, and study materials.</p>
                     </div>
@@ -651,6 +794,7 @@
                 <!-- Academic: TaskMaster Assignment Planner -->
                 <div class="project-card" data-category="academic" data-name="taskmaster assignment planner">
                     <div>
+                        <span class="project-tag">Academic Utility</span>
                         <h3>📋 TaskMaster Assignment Planner</h3>
                         <p>Manage college projects, lab tasks, and daily assignments with deadlines.</p>
                     </div>
@@ -660,8 +804,9 @@
                 </div>
 
                 <!-- Academic: E-Commerce Catalog -->
-                <div class="project-card" data-category="Academic" data-name="ecommerce product catalog">
+                <div class="project-card" data-category="academic" data-name="ecommerce product catalog store">
                     <div>
+                        <span class="project-tag">Web Store Project</span>
                         <h3>🛍️ E-Commerce Catalog</h3>
                         <p>Explore tech gadgets and accessories with live search filtering.</p>
                     </div>
@@ -673,6 +818,7 @@
                 <!-- Socials: Video Editing -->
                 <div class="project-card" data-category="socials" data-name="video editing reels portfolio">
                     <div>
+                        <span class="project-tag">Media Portfolio</span>
                         <h3>🎬 Video Editing Portfolio</h3>
                         <p>Short-form content creation and reels for Instagram.</p>
                     </div>
@@ -684,6 +830,7 @@
                 <!-- Socials: Vlogs -->
                 <div class="project-card" data-category="socials" data-name="gp dumka cse vlogs youtube">
                     <div>
+                        <span class="project-tag">YouTube Channel</span>
                         <h3>🎮 GP Dumka CSE & Vlogs</h3>
                         <p>College lifestyle vlogs and departmental updates.</p>
                     </div>
@@ -723,11 +870,11 @@
                 <input type="text" name="name" placeholder="Your Name" required>
                 <input type="email" name="email" placeholder="Your Email" required>
                 <textarea name="message" rows="3" placeholder="Your Message" required></textarea>
-                <button type="submit" class="btn" style="border:none; cursor:pointer; width:100%;">Send Message</button>
+                <button type="submit" class="btn" style="width:100%;">Send Message</button>
             </form>
 
             <!-- Responsive Button Grid -->
-            <div class="btn-group" style="margin-top: 1.5rem;">
+            <div class="btn-group" style="margin-top: 1.5rem; max-width: 100%;">
                 <a href="mailto:priytamk45@gmail.com" class="btn">Email Me</a>
                 <a href="https://instagram.com/pirtuu_621" target="_blank" class="btn btn-insta">Instagram</a>
                 <a href="https://youtube.com/@gpdumkacse" target="_blank" class="btn btn-yt">YouTube</a>
@@ -742,7 +889,49 @@
         <p>Designed by PRIYTAM KUMAR</p>
     </footer>
 
-    <!-- Scripts for Theme, Filter & Search -->
+    <!-- Digital Resume Pop-up Modal -->
+    <div class="modal-overlay" id="resumeOverlay" onclick="closeResume(event)">
+        <div class="resume-modal" id="resumeModal">
+            <button class="close-modal no-print" onclick="document.getElementById('resumeOverlay').style.display='none'">✕</button>
+            
+            <div class="resume-header">
+                <h2 style="border:none; margin:0; padding:0; font-size:1.6rem;">Priytam Kumar</h2>
+                <p style="margin:0; font-weight:500; color:var(--accent-color);">Computer Science Engineering Student & Web Developer</p>
+                <p style="font-size:0.8rem; margin-top:4px;">📍 Dumka, Jharkhand | 📧 priytamk45@gmail.com | 🌐 github.com/Priytamkrp</p>
+            </div>
+
+            <div class="resume-section">
+                <h4>Career Objective</h4>
+                <p style="font-size:0.88rem;">Passionate 1st-year Diploma in Computer Science Engineering student seeking opportunities to build responsive web applications, sharpen problem-solving skills, and contribute to innovative tech projects.</p>
+            </div>
+
+            <div class="resume-section">
+                <h4>Education</h4>
+                <p style="font-size:0.88rem; margin-bottom:2px;"><strong>Diploma in Computer Science & Engineering</strong> (2026 - Present)</p>
+                <p style="font-size:0.82rem;">Government Polytechnic, Dumka — 1st Year</p>
+                <p style="font-size:0.88rem; margin-top:6px; margin-bottom:2px;"><strong>Secondary Schooling</strong></p>
+                <p style="font-size:0.82rem;">Bal Bharti High School, Dumka</p>
+            </div>
+
+            <div class="resume-section">
+                <h4>Technical Skills</h4>
+                <p style="font-size:0.88rem;">• <strong>Web Technologies:</strong> HTML5, CSS3, JavaScript (DOM, LocalStorage, Web Audio API)<br>
+                • <strong>Tools & Platforms:</strong> GitHub, GitHub Pages, VS Code<br>
+                • <strong>Creative Media:</strong> Video Editing (CapCut, VN), Content Strategy</p>
+            </div>
+
+            <div class="resume-section">
+                <h4>Key Projects Built</h4>
+                <p style="font-size:0.85rem;">• <strong>Academic Suite:</strong> Smart College Notes Hub, TaskMaster Planner, CGPA & Attendance Calculator, E-Commerce Catalog.<br>
+                • <strong>Web Utilities:</strong> Focus Soundboard, QR Generator, Pomodoro Task Vault, Telegram OTP Gateway, Currency Converter.<br>
+                • <strong>Interactive Games:</strong> Cyber Neon Reflex, Neon Cyber Dodge, CS Mini Quiz, Tic-Tac-Toe.</p>
+            </div>
+
+            <button onclick="window.print()" class="btn no-print" style="width:100%; margin-top:1rem;">🖨️ Print / Save as PDF</button>
+        </div>
+    </div>
+
+    <!-- Scripts for Theme, Filter, Search & Resume -->
     <script>
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
@@ -758,9 +947,10 @@
             if (savedTheme === 'dark') {
                 document.body.classList.add('dark-mode');
             }
+            const count = document.querySelectorAll('.project-card').length;
+            document.getElementById('totalProjectsCount').innerText = count + "+";
         }
-
-        let currentCategory = 'all';
+      let currentCategory = 'all';
 
         function filterCategory(category, event) {
             currentCategory = category;
@@ -791,6 +981,18 @@
                 }
             });
         }
+
+        function openResume() {
+            document.getElementById('resumeOverlay').style.display = 'flex';
+        }
+
+        function closeResume(e) {
+            if (e.target.id === 'resumeOverlay') {
+                document.getElementById('resumeOverlay').style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
+
+        
