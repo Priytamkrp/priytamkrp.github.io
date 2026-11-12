@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chhath Puja Ultimate Invitation | Priytam Kumar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --bg-primary: #07090e;
+            --bg-card: rgba(17, 24, 39, 0.92);
+            --border-gold: rgba(251, 191, 36, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-gold: #fbbf24;
+            --accent-orange: #f97316;
+            --shadow-card: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(251, 191, 36, 0.15);
+            --radius-xl: 28px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 15px;
+        }
+
+        .ambient-bg {
+            position: fixed; inset: 0; z-index: -1;
+            background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #07090e 70%);
+        }
+
+        .invitation-wrapper {
+            max-width: 600px; width: 100%;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--border-gold);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem 1.8rem;
+            box-shadow: var(--shadow-card);
+            text-align: center;
+            max-height: 94vh;
+            overflow-y: auto;
+        }
+
+        .invitation-wrapper::-webkit-scrollbar { width: 6px; }
+        .invitation-wrapper::-webkit-scrollbar-thumb { background: rgba(251, 191, 36, 0.3); border-radius: 10px; }
+
+        .festival-emblem { font-size: 3rem; margin-bottom: 0.3rem; animation: floatEmblem 3s ease-in-out infinite alternate; }
+        @keyframes floatEmblem { 0% { transform: translateY(0); } 100% { transform: translateY(-6px); } }
+
+        .occasion-tag {
+            display: inline-block; background: rgba(249, 115, 22, 0.15); color: var(--accent-gold);
+            border: 1px solid var(--border-gold); padding: 5px 14px; border-radius: 50px;
+            font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.8rem;
+        }
+
+        .main-title {
+            font-family: 'Cinzel Decorative', serif; font-size: 1.8rem; color: var(--accent-gold);
+            margin-bottom: 0.8rem; text-shadow: 0 2px 10px rgba(251, 191, 36, 0.3);
+        }
+
+        .welcome-desc { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.5rem; }
+        .welcome-desc strong { color: var(--text-main); }
+
+        /* YouTube Music Embed Player Box (Auto-play enabled) */
+        .youtube-music-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-md);
+            padding: 10px;
+            margin-bottom: 1.5rem;
+        }
+        .youtube-title {
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: 0;
+            border-radius: 8px;
+        }
+
+        /* Friends Chips */
+        .friends-section {
+            background: rgba(255, 255, 255, 0.02); border: 1px dashed rgba(249, 115, 22, 0.4);
+            border-radius: var(--radius-lg); padding: 1rem; margin-bottom: 1.5rem;
+        }
+        .friends-header { font-size: 0.72rem; text-transform: uppercase; color: var(--accent-orange); font-weight: 700; margin-bottom: 8px; }
+        .friends-chips-grid { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+        .friend-chip {
+            background: #1e293b; border: 1px solid var(--border-gold); color: var(--accent-gold);
+            padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+        }
+
+        /* Matrix Details & Map */
+        .details-matrix { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; text-align: left; }
+        .matrix-card {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md); padding: 0.8rem 1rem; display: flex; align-items: center; gap: 12px;
+        }
+        .matrix-icon-box {
+            width: 36px; height: 36px; border-radius: 8px; background: rgba(251, 191, 36, 0.1);
+            color: var(--accent-gold); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;
+        }
+        .matrix-info { flex: 1; }
+        .matrix-label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; }
+        .matrix-value { font-size: 0.9rem; color: var(--text-main); font-weight: 600; }
+        .map-link-btn {
+            background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 5px 9px; border-radius: 6px; font-size: 0.72rem; text-decoration: none; font-weight: 600;
+            display: inline-flex; align-items: center; gap: 4px;
+        }
+
+        /* Real Chhath Photos Gallery */
+        .gallery-section { margin-bottom: 1.5rem; text-align: left; }
+        .section-title { font-size: 0.78rem; text-transform: uppercase; color: var(--accent-orange); font-weight: 700; margin-bottom: 8px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .polaroid-card {
+            background: #ffffff; padding: 6px 6px 20px 6px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transform: rotate(-1deg);
+        }
+        .polaroid-card:nth-child(2) { transform: rotate(2deg); }
+        .polaroid-card:nth-child(3) { transform: rotate(-2deg); }
+        .polaroid-img { width: 100%; height: 75px; object-fit: cover; border-radius: 2px; background: #cbd5e1; }
+        .polaroid-caption { font-size: 0.65rem; color: #0f172a; text-align: center; margin-top: 4px; font-weight: 600; }
+
+        /* Guestbook Form */
+        .guestbook-section {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.5rem; text-align: left;
+        }
+        .guestbook-input {
+            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.12);
+            padding: 8px 10px; border-radius: 8px; color: #fff; font-size: 0.85rem; margin-bottom: 8px; outline: none;
+        }
+        .guestbook-submit {
+            background: var(--accent-gold); color: #07090e; border: none; padding: 6px 14px;
+            border-radius: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
+        }
+        .wishes-list { margin-top: 8px; max-height: 80px; overflow-y: auto; font-size: 0.78rem; color: var(--text-muted); }
+
+        /* Host Footer & Actions */
+        .host-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 1rem; margin-bottom: 1rem;
+            display: flex; align-items: center; justify-content: space-between; text-align: left;
+        }
+        .host-label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; }
+        .host-name { font-size: 1rem; font-weight: 700; color: var(--accent-gold); }
+        .host-badge {
+            width: 38px; height: 38px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-orange));
+            display: flex; align-items: center; justify-content: center; color: #07090e; font-weight: 800; font-size: 0.9rem;
+        }
+
+        .action-buttons { display: flex; flex-direction: column; gap: 8px; }
+        .primary-action-btn {
+            background: linear-gradient(135deg, #fbbf24 0%, #f97316 100%);
+            color: #07090e; border: none; padding: 11px; border-radius: 12px; font-weight: 700; font-size: 0.88rem;
+            cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;
+            box-shadow: 0 5px 15px rgba(249, 115, 22, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-bg"></div>
+
+    <div class="invitation-wrapper">
+        <!-- YouTube Chhath Song Embedded Player (Auto-play & 36s Start) -->
+        <div class="youtube-music-box">
+            <div class="youtube-title"><i class="fa-brands fa-youtube" style="color: #ef4444; font-size: 1rem;"></i> Chhath Puja Special Song Vibe</div>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/FXaCyCQ1eh0?autoplay=1&mute=0&start=36" title="Chhath Puja Song" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="festival-emblem">🌅</div>
+        <div class="occasion-tag">छठ पूजा महापर्व • नहाय-खाय</div>
+        <h1 class="main-title">कद्दू-भात आमंत्रण</h1>
+        
+        <p class="welcome-desc">
+            लोक आस्था के महापर्व छठ के पावन अवसर पर <strong>नहाय-खाय</strong> के शुभ भोज पर आप सभी मित्रों का हार्दिक स्वागत है।
+        </p>
+
+        <!-- Friends Special Chips -->
+        <div class="friends-section">
+            <div class="friends-header"><i class="fa-solid fa-users"></i> Special Friends Invitation</div>
+            <div class="friends-chips-grid">
+                <div class="friend-chip">Mohit</div>
+                <div class="friend-chip">Rishikesh</div>
+                <div class="friend-chip">Dev</div>
+                <div class="friend-chip">Devojeet</div>
+                <div class="friend-chip">Pulkit</div>
+                <div class="friend-chip">Sahil</div>
+            </div>
+        </div>
+
+        <!-- Details Matrix with Google Maps -->
+        <div class="details-matrix">
+            <div class="matrix-card">
+                <div class="matrix-icon-box"><i class="fa-regular fa-calendar-days"></i></div>
+                <div class="matrix-info"><div class="matrix-label">Date</div><div class="matrix-value">13 November 2026</div></div>
+            </div>
+            <div class="matrix-card">
+                <div class="matrix-icon-box"><i class="fa-regular fa-clock"></i></div>
+                <div class="matrix-info"><div class="matrix-label">Time</div><div class="matrix-value">1:00 PM (दुपहर)</div></div>
+            </div>
+            <div class="matrix-card">
+                <div class="matrix-icon-box"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="matrix-info" style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div class="matrix-label">Venue (Dumka)</div>
+                        <div class="matrix-value" style="font-size:0.8rem;">Gilan Para, Rajendra Nagar</div>
+                    </div>
+                    <a href="https://maps.google.com/?q=Gilan+Para+Rajendra+Nagar+Dumka" target="_blank" class="map-link-btn">
+                        <i class="fa-solid fa-map"></i> Map
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Real User Photos Added -->
+        <div class="gallery-section">
+            <div class="section-title"><i class="fa-solid fa-images"></i> Chhath Ghat & Vibe</div>
+            <div class="gallery-grid">
+                <div class="polaroid-card">
+                    <img src="1000118064.jpg" class="polaroid-img" alt="Chhath Ritual">
+                    <div class="polaroid-caption">Arghya Offering</div>
+                </div>
+                <div class="polaroid-card">
+                    <img src="1000118061.jpg" class="polaroid-img" alt="Chhath Ghat Crowd">
+                    <div class="polaroid-caption">Ghat Celebration</div>
+                </div>
+                <div class="polaroid-card">
+                    <img src="1000118060.jpg" class="polaroid-img" alt="Sunset Surya Puja">
+                    <div class="polaroid-caption">Surya Arghya</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guestbook Form -->
+        <div class="guestbook-section">
+            <div class="section-title"><i class="fa-solid fa-pen"></i> Drop a Wish for Host</div>
+            <input type="text" id="guestName" class="guestbook-input" placeholder="Enter your name...">
+            <button class="guestbook-submit" onclick="addWish()">Send Wish</button>
+            <div class="wishes-list" id="wishesList"></div>
+        </div>
+
+        <!-- Host Footer -->
+        <div class="host-footer">
+            <div>
+                <div class="host-label">Hosted By / निवेदक</div>
+                <div class="host-name">Priytam Kumar</div>
+            </div>
+            <div class="host-badge">PK</div>
+        </div>
+
+        <!-- Action Button -->
+        <div class="action-buttons">
+            <a href="https://api.whatsapp.com/send?text=Mohit, Rishikesh, Dev, Devojeet, Pulkit, Sahil aur sabhi dosto ko Chhath Puja ke Nahay Khay par 13 November 2026, dopahar 1:00 baje Gilan Para, Rajendra Nagar, Dumka me sadar amantran hai! - By Priytam Kumar" target="_blank" class="primary-action-btn">
+                <i class="fa-brands fa-whatsapp" style="font-size: 1.1rem;"></i> WhatsApp पर शेयर करें
+            </a>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            confetti({ particleCount: 60, spread: 60, origin: { y: 0.6 } });
+            cleanAndLoadWishes();
+        });
+
+        // Clean up Dev and Pulkit from LocalStorage automatically if present, then load
+        function cleanAndLoadWishes() {
+            let wishes = JSON.parse(localStorage.getItem('chhath_wishes')) || [];
+            // Filter out entries containing Dev or Pulkit joined messages
+            wishes = wishes.filter(w => !w.includes('Dev') && !w.includes('Pulkit'));
+            localStorage.setItem('chhath_wishes', JSON.stringify(wishes));
+            loadWishes();
+        }
+
+        function addWish() {
+            const name = document.getElementById('guestName').value.trim();
+            if (!name) return alert('कृपया अपना नाम दर्ज करें!');
+            
+            let wishes = JSON.parse(localStorage.getItem('chhath_wishes')) || [];
+            wishes.push(name + " joined the excitement! 🎉");
+            localStorage.setItem('chhath_wishes', JSON.stringify(wishes));
+            
+            document.getElementById('guestName').value = '';
+            loadWishes();
+            confetti({ particleCount: 40 });
+        }
+
+        function loadWishes() {
+            const list = document.getElementById('wishesList');
+            let wishes = JSON.parse(localStorage.getItem('chhath_wishes')) || [];
+            list.innerHTML = wishes.map(w => `<div>• ${w}</div>`).join('') || '<div style="color:var(--text-muted)">Be the first friend to drop a wish!</div>';
+        }
+    </script>
+</body>
+</html>
