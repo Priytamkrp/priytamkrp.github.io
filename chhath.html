@@ -111,6 +111,26 @@
             border-radius: 8px;
         }
 
+        /* Countdown Timer Box */
+        .countdown-section {
+            background: rgba(251, 191, 36, 0.05);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            margin-bottom: 1.5rem;
+        }
+        .countdown-title { font-size: 0.72rem; text-transform: uppercase; color: var(--accent-gold); font-weight: 700; margin-bottom: 8px; }
+        .countdown-grid { display: flex; justify-content: center; gap: 10px; }
+        .time-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            padding: 8px 10px;
+            border-radius: 8px;
+            min-width: 50px;
+        }
+        .time-digits { font-size: 1.1rem; font-weight: 700; color: var(--accent-gold); }
+        .time-label { font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; }
+
         /* Friends Chips */
         .friends-section {
             background: rgba(255, 255, 255, 0.02); border: 1px dashed rgba(249, 115, 22, 0.4);
@@ -155,7 +175,7 @@
         .polaroid-img { width: 100%; height: 75px; object-fit: cover; border-radius: 2px; background: #cbd5e1; }
         .polaroid-caption { font-size: 0.65rem; color: #0f172a; text-align: center; margin-top: 4px; font-weight: 600; }
 
-        /* Guestbook Form (Formspree Integrated) */
+        /* Guestbook Form */
         .guestbook-section {
             background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.5rem; text-align: left;
@@ -197,7 +217,7 @@
     <div class="ambient-bg"></div>
 
     <div class="invitation-wrapper">
-        <!-- YouTube Chhath Song Embedded Player (Auto-play & 36s Start) -->
+        <!-- YouTube Chhath Song Embedded Player -->
         <div class="youtube-music-box">
             <div class="youtube-title"><i class="fa-brands fa-youtube" style="color: #ef4444; font-size: 1rem;"></i> Chhath Puja Special Song Vibe</div>
             <div class="video-container">
@@ -212,6 +232,29 @@
         <p class="welcome-desc">
             लोक आस्था के महापर्व छठ के पावन अवसर पर <strong>नहाय-खाय</strong> के शुभ भोज पर आप सभी मित्रों का हार्दिक स्वागत है।
         </p>
+
+        <!-- Live Countdown Timer -->
+        <div class="countdown-section">
+            <div class="countdown-title"><i class="fa-solid fa-hourglass-start"></i> Countdown to Nahay-Khay</div>
+            <div class="countdown-grid">
+                <div class="time-box">
+                    <div class="time-digits" id="days">00</div>
+                    <div class="time-label">Days</div>
+                </div>
+                <div class="time-box">
+                    <div class="time-digits" id="hours">00</div>
+                    <div class="time-label">Hours</div>
+                </div>
+                <div class="time-box">
+                    <div class="time-digits" id="minutes">00</div>
+                    <div class="time-label">Mins</div>
+                </div>
+                <div class="time-box">
+                    <div class="time-digits" id="seconds">00</div>
+                    <div class="time-label">Secs</div>
+                </div>
+            </div>
+        </div>
 
         <!-- Friends Special Chips -->
         <div class="friends-section">
@@ -299,7 +342,35 @@
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             confetti({ particleCount: 60, spread: 60, origin: { y: 0.6 } });
+            startCountdown();
         });
+
+        // Countdown Timer Logic for 13 November 2026, 13:00:00
+        function startCountdown() {
+            const eventDate = new Date("November 13, 2026 13:00:00").getTime();
+
+            setInterval(() => {
+                const now = new Date().getTime();
+                const timeLeft = eventDate - now;
+
+                if (timeLeft > 0) {
+                    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                    document.getElementById('days').innerText = String(days).padStart(2, '0');
+                    document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+                    document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+                    document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+                } else {
+                    document.getElementById('days').innerText = "00";
+                    document.getElementById('hours').innerText = "00";
+                    document.getElementById('minutes').innerText = "00";
+                    document.getElementById('seconds').innerText = "00";
+                }
+            }, 1000);
+        }
 
         function handleFormSubmit(e) {
             e.preventDefault();
