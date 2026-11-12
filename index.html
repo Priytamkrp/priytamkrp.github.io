@@ -526,6 +526,55 @@
             </div>
         </div>
     </header>
+  <!-- Live Visitor Counter Badge -->
+<div class="visitor-counter-box">
+    <span class="live-dot"></span>
+    <span class="counter-text">Total Visitors:</span>
+    <span id="visitorCount" class="counter-number">...</span>
+</div>
+
+<style>
+    .visitor-counter-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #eff6ff; /* Light Blue Tint */
+        border: 1px solid #bfdbfe;
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.85rem;
+        color: #1e3a8a;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+        margin: 15px auto;
+    }
+
+    .live-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #2563eb; /* Blue Highlight */
+        border-radius: 50%;
+        animation: pulseBlue 1.5s infinite;
+    }
+
+    @keyframes pulseBlue {
+        0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.6); }
+        70% { box-shadow: 0 0 0 8px rgba(37, 99, 235, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+    }
+
+    .counter-text {
+        font-weight: 500;
+        color: #475569;
+    }
+
+    .counter-number {
+        font-weight: 700;
+        color: #2563eb;
+        font-size: 0.95rem;
+    }
+</style>
+
 
     <div class="container">
         <!-- About Section -->
@@ -814,30 +863,6 @@
                         <a href="ecommerce-catalog.html" target="_blank" class="btn-sm btn-primary">🛒 Explore Store</a>
                     </div>
                 </div>
-                <!-- utilities: Priytam AI Assistant -->
-<div class="project-card" data-category="utilities" data-name="priytam ai assistant chatbot">
-    <div class="project-info">
-        <span class="project-tag">AI Web App</span>
-        <h3>🤖 Priytam AI Assistant</h3>
-        <p>A smart, conversational AI companion with chat history, voice input, and instant coding & general knowledge support.</p>
-    </div>
-    <div class="project-links">
-        <a href="ai-assistant.html" target="_blank" class="btn-sm btn-primary">💬 Launch AI</a>
-    </div>
-</div>
-             
-                <!-- Chhath Puja Invitation Project Card -->
-<div class="project-card" data-category="festival" data-name="chhath puja invitation">
-    <div>
-        <span class="project-tag">Festival Invitation</span>
-        <h3>🌅 छठ पूजा (नहाय-खाय) आमंत्रण</h3>
-        <p>Interactive web invitation for Chhath Puja (13 November 2026, Gilan Para, Dumka) with song vibe and guest wishes.</p>
-    </div>
-    <div class="project-links">
-        <a href="chhath.html" target="_blank" class="btn-sm btn-primary">🚀 कार्ड खोलें</a>
-    </div>
-</div>
-                
     
                 <!-- Socials: Video Editing -->
                 <div class="project-card" data-category="socials" data-name="video editing reels portfolio">
@@ -1016,6 +1041,31 @@
             }
         }
     </script>
+  <script>
+    // Session-based Visitor Counter (Refresh karne par nahi badhega)
+    document.addEventListener("DOMContentLoaded", () => {
+        let visits = localStorage.getItem("portfolio_total_visits");
+        
+        if (!visits) {
+            visits = 150; // Starting base visitors
+        }
+        
+        // Check karo ki is session me pehle hi visit count ho chuka hai kya
+        if (!sessionStorage.getItem("has_visited_session")) {
+            visits = parseInt(visits) + 1;
+            localStorage.setItem("portfolio_total_visits", visits);
+            sessionStorage.setItem("has_visited_session", "true");
+        }
+        
+        // HTML element me value daal do
+        const visitorEl = document.getElementById("visitorCount");
+        if (visitorEl) {
+            visitorEl.innerText = visits;
+        }
+    });
+</script>
+
+
 </body>
 </html>
 
